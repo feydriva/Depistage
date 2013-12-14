@@ -1,7 +1,6 @@
 
 SET( QT_USE_QTXML TRUE )
 
-include_directories(${Qt5Widgets_INCLUDE_DIRS})
 ADD_DEFINITIONS( ${QT_DEFINITIONS} )
 
 INCLUDE_DIRECTORIES( .
@@ -29,14 +28,14 @@ SOURCE_GROUP( Gui FILES ${GUI_SRC} )
 SOURCE_GROUP( Main FILES ${MAIN_SRC} )
 SOURCE_GROUP( Office FILES ${OFFICE_SRC} )
 
-ADD_LIBRARY( src
+ADD_LIBRARY( DepistageCore
              ${GUI_SRC}
              ${MAIN_SRC}
              ${OFFICE_SRC}
              ${QTFILE_HEADERS_MOC}
              ${SOURCES_RC_SRC} )
 
-TARGET_LINK_LIBRARIES( src ${Qt5Widgets_LIBRARIES} )
+TARGET_LINK_LIBRARIES( DepistageCore ${Qt5Widgets_LIBRARIES} )
 
 ADD_EXECUTABLE( ${PROJECT_NAME}
                 ${GUI_TYPE}
@@ -44,4 +43,4 @@ ADD_EXECUTABLE( ${PROJECT_NAME}
 
 qt5_use_modules( ${PROJECT_NAME} Widgets )
 
-TARGET_LINK_LIBRARIES( ${PROJECT_NAME} ${Qt5Widgets_LIBRARIES} src )
+TARGET_LINK_LIBRARIES( ${PROJECT_NAME} ${Qt5Widgets_LIBRARIES} DepistageCore )
