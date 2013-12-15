@@ -4,14 +4,16 @@
 #include <ActiveQt/QAxWidget>
 #include <QtTest/QtTest>
 
+#include <memory>
+
 WordTests::WordTests()
 {
 }
 
 void WordTests::testActiveX()
 {
-	QAxWidget * wordWidget = new QAxWidget( "Word.Application", NULL );
-    QVERIFY( wordWidget );
+	std::unique_ptr< QAxWidget > word( new QAxWidget( "Word.Application", NULL ) );
+    QVERIFY( word.get() );
 }
 /*
 void WordTests::testOpenDocument()
