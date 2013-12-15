@@ -35,7 +35,7 @@ ADD_LIBRARY( DepistageCore
              ${QTFILE_HEADERS_MOC}
              ${SOURCES_RC_SRC} )
 
-TARGET_LINK_LIBRARIES( DepistageCore ${Qt5Widgets_LIBRARIES} )
+TARGET_LINK_LIBRARIES( DepistageCore ${QT_LIBRARIES} )
 
 ADD_EXECUTABLE( ${PROJECT_NAME}
                 ${GUI_TYPE}
@@ -43,4 +43,4 @@ ADD_EXECUTABLE( ${PROJECT_NAME}
 
 qt5_use_modules( ${PROJECT_NAME} Widgets )
 
-TARGET_LINK_LIBRARIES( ${PROJECT_NAME} ${Qt5Widgets_LIBRARIES} DepistageCore )
+TARGET_LINK_LIBRARIES( ${PROJECT_NAME} ${QT_LIBRARIES} DepistageCore )
