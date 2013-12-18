@@ -6,6 +6,8 @@
 
 //#include <src/office/[...].hpp"
 
+namespace depistage { namespace office { namespace test {
+
 class WordTests : public QObject
 {
     Q_OBJECT
@@ -13,8 +15,10 @@ public:
     WordTests();
 
 private slots:
-    void testActiveX();
+    void testLaunchWord();
+    void testOpenDocument();
 };
 
+} } }
 
 #endif // SQLTRANSACTIONTESTS_H

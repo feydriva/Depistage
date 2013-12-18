@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>input/test.doc</file>
+        <file>input/test.docx</file>
+    </qresource>
+</RCC>

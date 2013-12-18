@@ -3,14 +3,14 @@
 
 # SET( TestApplication_SRCS TestApplication.cpp )
 
-SET( TEST_LIBRARIES DepistageCore ${Qt5Test_LIBRARIES} ${QT_LIBRARIES} )
+set( TEST_LIBRARIES DepistageCore ${Qt5Test_LIBRARIES} ${QT_LIBRARIES} )
 
-#QT_ADD_RESOURCES( TestDataResources_SRCS TestData.qrc )
+qt5_add_resources( tests_SRC tests.qrc )
 
-SET( WordTests_SRCS WordTests.cpp )
-ADD_EXECUTABLE( WordTests ${WordTests_SRCS} )
-TARGET_LINK_LIBRARIES( WordTests ${TEST_LIBRARIES} )
-ADD_TEST( NAME WordTests COMMAND WordTests )
+set( WordTests_SRCS WordTests.cpp )
+add_executable( WordTests ${WordTests_SRCS} ${tests_SRC} )
+target_link_libraries( WordTests ${TEST_LIBRARIES} )
+add_test( NAME WordTests COMMAND WordTests )
 
 # SET( TaskStructureTests_SRCS TaskStructureTests.cpp )
 # ADD_EXECUTABLE(
