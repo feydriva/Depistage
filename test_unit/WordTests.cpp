@@ -1,16 +1,17 @@
 
 #include "WordTests.hpp"
 
-#include <ActiveQt/QAxWidget>
+#include <office/Word.hpp>
+#include <office/WordDocument.hpp>
+
 #include <ActiveQt/QAxObject>
 #include <QtTest/QtTest>
-
-#include <memory>
 
 #include <QDesktopServices>
 #include <QUrl>
 
 #include <iostream>
+#include <sstream>
 
 namespace depistage { namespace office { namespace test {
 
@@ -18,97 +19,64 @@ WordTests::WordTests()
 {
 }
 
-class WordDocument
+const std::string NoError = "No error";
+
+void WordTests::init()
 {
-   public:
-      WordDocument( QAxObject * wordDocument );
-
-      bool isOpen() const;
-
-   private:
-      std::unique_ptr< QAxObject > m_document;
-};
-
-WordDocument::WordDocument( QAxObject * document )
-   : m_document( document )
-{
+   m_lastErrorMessage = NoError;
 }
 
-bool WordDocument::isOpen() const
+void WordTests::checkLastErrorMessage()
 {
-   return m_document.get() != nullptr;
-}
-
-class Word
-{
-   public:
-      Word();
-      ~Word();
-
-      WordDocument open( const std::string & path );
-
-      bool isLaunched() const;
-
-   private:
-      std::unique_ptr< QAxObject > m_word;
-      std::unique_ptr< QAxObject > m_documents;
-
-      void initializeDocuments();
-};
-
-Word::Word()
-   : m_word( new QAxObject( "Word.Application", NULL ) )
-{
-   m_word->setProperty( "DisplayAlerts", false );
-   m_word->setProperty( "Visible", true/*false*/ );
-}
-
-Word::~Word()
-{
-   //m_word->dynamicCall( "Quit(void)" );
-}
-
-void Word::initializeDocuments()
-{
-   if (!m_documents)
-   {
-      m_documents.reset( (QAxObject *) m_word->querySubObject( "Documents" ) );
-   }
-}
-
-WordDocument Word::open( const std::string & path )
-{
-   initializeDocuments();
-   m_documents->dynamicCall( "Open(const QString&)", path.c_str() );
-   return WordDocument( (QAxObject *) m_word->querySubObject( "ActiveDocument" ) );
-}
-
-bool Word::isLaunched() const
-{
-   return m_word.get() != nullptr;
+   QCOMPARE( m_lastErrorMessage, NoError );
 }
 
 void WordTests::testLaunchWord()
 {
-   Word word;
+   Word word( this );
    QVERIFY( word.isLaunched() );
+   checkLastErrorMessage();
 }
 
-void testOpenDocument2( const std::string & path, const std::string & tempPath )
+void WordTests::testOpenDocumentBody( const std::string & path, const std::string & tempPath )
 {
    QFile::copy( path.c_str(), tempPath.c_str() );
    {
-      Word word;
+      Word word( this );
       WordDocument docTest = word.open( tempPath );
       QVERIFY( docTest.isOpen() );
    }
-   QFile::remove( "tempPath" );
+   QFile::remove( tempPath.c_str() );
 }
 
 void WordTests::testOpenDocument()
 {
-   testOpenDocument2( ":/input/test.doc", "d:\\test_temp.doc" );
-   testOpenDocument2( ":/input/test.docx", "d:\\test_temp.docx" );
+   testOpenDocumentBody( ":/input/test.doc", "d:\\test_temp.doc" );
+   testOpenDocumentBody( ":/input/test.docx", "d:\\test_temp.docx" );
+   checkLastErrorMessage();
+}
+
+void WordTests::testReplaceInDocument()
+{
+   const std::string tempPath = "d:\\test_temp2.doc";
+   QFile::copy( ":/input/test.doc", tempPath.c_str() );
+   {
+      Word word( this );
+      WordDocument docTest = word.open( tempPath );
+      QVERIFY( docTest.isOpen() );
+      docTest.replace( "toto", "tata" );
+   }
+   //QFile::remove( tempPath.c_str() );
+}
+
+void WordTests::catchException( int code, const QString & source, const QString & desc, const QString & help )
+{
+   std::ostringstream oss;
+   oss << "Exception Catched! \n";
+   oss << "Code: " << code << "\n";
+   oss << "Source: " << source.toStdString() << "\n";
+   oss << "Description: " << desc.toStdString() << "\n";
+   oss << "Help: " << help.toStdString() << "\n";
 }
 
 } } }

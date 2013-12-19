@@ -1,5 +1,6 @@
 
-# INCLUDE_DIRECTORIES( ${Charm_SOURCE_DIR} )
+INCLUDE_DIRECTORIES( .
+                     ../src )
 
 # SET( TestApplication_SRCS TestApplication.cpp )
 

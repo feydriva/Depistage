@@ -12,10 +12,6 @@ class FenetrePrincipale : public QMainWindow
    Q_OBJECT
 public :
    FenetrePrincipale( QWidget * parent = nullptr );
-
-
-private slots:
-    void catchException(int code, const QString &source, const QString &desc, const QString &help);
 };
 
 } }

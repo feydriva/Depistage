@@ -18,10 +18,10 @@ FILE( GLOB GUI_SRC "gui/*.*" )
 FILE( GLOB MAIN_SRC "main/*.*" )
 FILE( GLOB OFFICE_SRC "office/*.*" )
 
-SET( QTFILE_HEADERS
-     gui/FenetrePrincipale.hpp )
+#SET( QTFILE_HEADERS
+#     gui/FenetrePrincipale.hpp )
 
-qt5_wrap_cpp( QTFILE_HEADERS_MOC ${QTFILE_HEADERS} )
+#qt5_wrap_cpp( QTFILE_HEADERS_MOC ${QTFILE_HEADERS} )
 qt5_add_resources( SOURCES_RC_SRC ${SOURCES_RC} )
 
 SOURCE_GROUP( Gui FILES ${GUI_SRC} )
