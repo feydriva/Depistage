@@ -3,8 +3,8 @@
 
 #include <QApplication>
 
-#include <office/Word.hpp>
-#include <office/WordDocument.hpp>
+//#include <office/Word.hpp>
+//#include <office/WordDocument.hpp>
 
 int main( int argc, char *argv[] )
 {
@@ -13,9 +13,9 @@ int main( int argc, char *argv[] )
    depistage::gui::FenetrePrincipale fenetre;
    fenetre.show();
 
-   depistage::office::Word word;
-   depistage::office::WordDocument document = word.open( "C:\\test.doc" );
-   document.replace( "chat", "lion" );
+//   depistage::office::Word word;
+//   depistage::office::WordDocument document = word.open( "C:\\test.doc" );
+//   document.replace( "chat", "lion" );
 
    return app.exec();
 }
