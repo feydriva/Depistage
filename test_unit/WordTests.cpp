@@ -7,10 +7,10 @@
 #include <ActiveQt/QAxObject>
 #include <QtTest/QtTest>
 
-#include <QDesktopServices>
-#include <QUrl>
+//#include <QDesktopServices>
+//#include <QUrl>
 
-#include <iostream>
+//#include <iostream>
 #include <sstream>
 
 namespace depistage { namespace office { namespace test {

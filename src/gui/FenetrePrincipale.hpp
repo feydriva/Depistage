@@ -21,9 +21,11 @@ private :
    RemplacerMot * m_motRemplacerChat;
    RemplacerMotConfig * m_motRemplacerTest;
    SelectionFichier * m_wordTest;
+   SelectionFichier * m_excelTest;
 
 private slots:
    void remplacer();
+   void ajouter();
 };
 
 } }

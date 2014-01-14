@@ -13,10 +13,14 @@ class SelectionFichier : public QWidget
 {
    Q_OBJECT
 public :
-   SelectionFichier( const QString & labelStr, QWidget * parent = nullptr );
+   SelectionFichier( const QString & labelStr, const QString & message,
+                     const QString & filtre, QWidget * parent = nullptr );
    QString getChemin() const;
 
 private :
+   QString m_message;
+   QString m_filtre;
+
    QLineEdit * m_wordTest;
 
 private slots:

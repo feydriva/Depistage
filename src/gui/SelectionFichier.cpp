@@ -8,8 +8,10 @@
 
 namespace depistage { namespace gui {
 
-SelectionFichier::SelectionFichier( const QString & labelStr, QWidget * parent )
-	: QWidget( parent )
+SelectionFichier::SelectionFichier( const QString & labelStr, const QString & message,
+                                    const QString & filtre, QWidget * parent )
+	: QWidget( parent ),
+     m_message( message ), m_filtre( filtre )
 {
    QHBoxLayout * mainLayout = new QHBoxLayout();
 
@@ -34,11 +36,7 @@ QString SelectionFichier::getChemin() const
 
 void SelectionFichier::parcourir()
 {
-   const QString chemin =
-      QFileDialog::getOpenFileName( this,
-                                    tr( "Open Word" ),
-                                    getChemin(),
-                                    tr( "Word files (*.doc *.docx)" ) );
+   const QString chemin = QFileDialog::getOpenFileName( this, m_message, getChemin(), m_filtre );
    m_wordTest->setText( chemin );
 }
 

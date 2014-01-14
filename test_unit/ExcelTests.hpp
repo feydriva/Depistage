@@ -1,6 +1,6 @@
 
-#ifndef DEPISTAGE_TEST_WORDTESTS_HPP
-#define DEPISTAGE_TEST_WORDTESTS_HPP
+#ifndef DEPISTAGE_TEST_EXCELTESTS_HPP
+#define DEPISTAGE_TEST_EXCELTESTS_HPP
 
 #include <QObject>
 #include <ActiveQt/QAxObject>
@@ -9,11 +9,11 @@
 
 namespace depistage { namespace office { namespace test {
 
-class WordTests : public QObject
+class ExcelTests : public QObject
 {
    Q_OBJECT
 public:
-   WordTests();
+   ExcelTests();
 
 private:
    std::string m_lastErrorMessage;
@@ -25,9 +25,9 @@ private:
 
 private slots:
    void init();
-   void testLaunchWord();
+   void testLaunchExcel();
    void testOpenDocument();
-   void testReplaceInDocument();
+   void testAjoutLigne();
 
    void catchException(int code, const QString &source, const QString &desc, const QString &help);
 };
