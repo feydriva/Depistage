@@ -63,7 +63,10 @@ void FenetrePrincipale::ajouter()
 {
    depistage::office::Excel excel;
    depistage::office::ExcelDocument document = excel.open( m_excelTest->getChemin().toStdString() );
-   document.ajouterLigne();
+   depistage::office::ExcelOnglet onglet = document.recupererOnglet( 1 );
+   std::vector< std::string > informations;
+   informations.push_back( "Toto" );
+   onglet.ajouterLigne( informations );
 }
 // fin debug à virer !
 

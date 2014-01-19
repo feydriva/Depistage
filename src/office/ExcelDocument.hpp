@@ -2,6 +2,8 @@
 #ifndef DEPISTAGE_TEST_EXCEL_DOCUMENT_HPP
 #define DEPISTAGE_TEST_EXCEL_DOCUMENT_HPP
 
+#include "ExcelOnglet.hpp"
+
 #include <ActiveQt/QAxObject>
 #include <QtCore/QObject>
 
@@ -15,7 +17,7 @@ class ExcelDocument
    public:
       ExcelDocument( QAxObject * workbook, QObject * parent = NULL );
 
-      void ajouterLigne();
+      ExcelOnglet recupererOnglet( unsigned int ongletId );
 
       bool isOpen() const;
 

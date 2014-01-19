@@ -3,6 +3,7 @@
 
 #include <office/Excel.hpp>
 #include <office/ExcelDocument.hpp>
+#include <office/ExcelOnglet.hpp>
 
 #include <ActiveQt/QAxObject>
 #include <QtTest/QtTest>
@@ -64,7 +65,13 @@ void ExcelTests::testAjoutLigne()
       Excel Excel( this );
       ExcelDocument xlsTest = Excel.open( tempPath );
       QVERIFY( xlsTest.isOpen() );
-      xlsTest.ajouterLigne();
+      ExcelOnglet xlsOngletTest = xlsTest.recupererOnglet( 1 );
+      QVERIFY( xlsOngletTest.isOpen() );
+
+      std::vector< std::string > informations;
+      informations.push_back( "Toto" );
+      informations.push_back( "Tutu" );
+      xlsOngletTest.ajouterLigne( informations );
    }
    //QFile::remove( tempPath.c_str() );
 }
