@@ -13,7 +13,8 @@ class RemplacerMotConfig : public QWidget
 {
    Q_OBJECT
 public :
-   RemplacerMotConfig( QWidget * parent = nullptr );
+   RemplacerMotConfig( const QString & labelStr, const QString & motARemplacer,
+                       QWidget * parent = nullptr );
    QString motARemplacer() const;
    QString motParLequelRemplacer() const;
 

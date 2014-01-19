@@ -13,13 +13,37 @@
 
 namespace depistage { namespace gui {
 
-FenetrePrincipale::FenetrePrincipale( QWidget * parent )
+FenetrePrincipale::FenetrePrincipale( std::vector< depistage::gui::ElementGUI * > widgets, QWidget * parent )
 	: QMainWindow( parent )
 {
    QWidget * mainWidget = new QWidget();
    QGridLayout * mainLayout = new QGridLayout();
+   
+   QVBoxLayout * basicLayout = new QVBoxLayout();
+   QVBoxLayout * configLayout = new QVBoxLayout();
 
    int row = 0;
+   for ( std::vector< depistage::gui::ElementGUI * >::const_iterator iteWidget = widgets.begin();
+         iteWidget != widgets.end();
+         ++iteWidget )
+   {
+      basicLayout->addWidget( (*iteWidget)->widgetBasic() );
+      configLayout->addWidget( (*iteWidget)->widgetConfig() );
+   }
+
+   mainLayout->addLayout( basicLayout, row++, 0 );
+
+   m_configButton = new QPushButton( tr( "Afficher la configuration" ) );
+   m_configButton->setCheckable( true );
+   m_configButton->setChecked( false );
+   mainLayout->addWidget( m_configButton, row++, 0 );
+   connect( m_configButton, SIGNAL( clicked() ),
+            this,           SLOT(   configOnOff() ) );
+   
+   m_configWidget = new QWidget();
+   m_configWidget->setLayout( configLayout );
+   m_configWidget->hide();
+   mainLayout->addWidget( m_configWidget, row++, 0 );
 
    /*m_motRemplacerChat = new RemplacerMot( "chat" );
    mainLayout->addWidget( m_motRemplacerChat, row++, 0 );
@@ -68,6 +92,12 @@ void FenetrePrincipale::ajouter()
    informations.push_back( "Toto" );
    onglet.ajouterLigne( informations );
 }
+
 // fin debug à virer !
+
+void FenetrePrincipale::configOnOff()
+{
+   m_configWidget->setVisible( m_configButton->isChecked() );
+}
 
 } }
