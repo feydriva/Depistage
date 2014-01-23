@@ -1,43 +1,24 @@
 
 #include "SelectionFichier.hpp"
 
-#include <QtWidgets/QFileDialog>
-#include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QPushButton>
+#include "SelectionFichierWidget.hpp"
 
 namespace depistage { namespace gui {
 
-SelectionFichier::SelectionFichier( const QString & labelStr, const QString & message,
-                                    const QString & filtre, QWidget * parent )
-	: QWidget( parent ),
-     m_message( message ), m_filtre( filtre )
+SelectionFichier::SelectionFichier(const QString & labelStr, const QString & message,
+                                                const QString & filtre, QWidget * parent )
+	: m_widgetConfig( new SelectionFichierWidget( labelStr, message, filtre, parent ) )
 {
-   QHBoxLayout * mainLayout = new QHBoxLayout();
-
-   QLabel * label = new QLabel( labelStr );
-   mainLayout->addWidget( label );
-   m_wordTest = new QLineEdit();
-   m_wordTest->setReadOnly( true );
-   mainLayout->addWidget( m_wordTest );
-   QPushButton * pushButton = new QPushButton( tr( "Parcourir" ) );
-   mainLayout->addWidget( pushButton );
-
-   connect( pushButton, SIGNAL( clicked() ),
-            this,       SLOT(   parcourir() ) );
-   
-   setLayout( mainLayout );
 }
 
-QString SelectionFichier::getChemin() const
+QWidget * SelectionFichier::widgetBasic() const
 {
-   return m_wordTest->text();
+   return nullptr;
 }
 
-void SelectionFichier::parcourir()
+QWidget * SelectionFichier::widgetConfig() const
 {
-   const QString chemin = QFileDialog::getOpenFileName( this, m_message, getChemin(), m_filtre );
-   m_wordTest->setText( chemin );
+   return m_widgetConfig;
 }
 
 } }

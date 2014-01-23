@@ -2,6 +2,8 @@
 #ifndef DEPISTAGE_GUI_SELECTION_FICHIER_HPP
 #define DEPISTAGE_GUI_SELECTION_FICHIER_HPP
 
+#include "ElementGUI.hpp"
+
 #include <QtCore/QString>
 
 #include <QtWidgets/QLineEdit>
@@ -9,22 +11,18 @@
 
 namespace depistage { namespace gui {
 
-class SelectionFichier : public QWidget
+class SelectionFichier : public ElementGUI
 {
    Q_OBJECT
 public :
    SelectionFichier( const QString & labelStr, const QString & message,
                      const QString & filtre, QWidget * parent = nullptr );
-   QString getChemin() const;
+
+   virtual QWidget * widgetBasic() const override;
+   virtual QWidget * widgetConfig() const override;
 
 private :
-   QString m_message;
-   QString m_filtre;
-
-   QLineEdit * m_wordTest;
-
-private slots:
-   void parcourir();
+   QWidget * m_widgetConfig;
 };
 
 } }

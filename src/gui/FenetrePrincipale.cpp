@@ -13,8 +13,9 @@
 
 namespace depistage { namespace gui {
 
-FenetrePrincipale::FenetrePrincipale( std::vector< depistage::gui::ElementGUI * > widgets, QWidget * parent )
-	: QMainWindow( parent )
+FenetrePrincipale::FenetrePrincipale( std::vector< depistage::gui::ElementGUI * > widgets,
+                                      QWidget * parent )
+   : QMainWindow( parent )
 {
    QWidget * mainWidget = new QWidget();
    QGridLayout * mainLayout = new QGridLayout();
@@ -27,8 +28,14 @@ FenetrePrincipale::FenetrePrincipale( std::vector< depistage::gui::ElementGUI * 
          iteWidget != widgets.end();
          ++iteWidget )
    {
-      basicLayout->addWidget( (*iteWidget)->widgetBasic() );
-      configLayout->addWidget( (*iteWidget)->widgetConfig() );
+      if ((*iteWidget)->widgetBasic() != nullptr)
+      {
+         basicLayout->addWidget( (*iteWidget)->widgetBasic() );
+      }
+      if ((*iteWidget)->widgetConfig() != nullptr)
+      {
+         configLayout->addWidget((*iteWidget)->widgetConfig());
+      }
    }
 
    mainLayout->addLayout( basicLayout, row++, 0 );
@@ -51,7 +58,7 @@ FenetrePrincipale::FenetrePrincipale( std::vector< depistage::gui::ElementGUI * 
    m_motRemplacerTest = new RemplacerMotConfig();
    mainLayout->addWidget( m_motRemplacerTest, row++, 0 );*/
    
-   m_wordTest = new SelectionFichier( tr( "Word de test : " ),
+   /*m_wordTest = new SelectionFichier( tr( "Word de test : " ),
                                       tr( "Ouvrir un document Word" ), tr( "Word files (*.doc *.docx)" ) );
    mainLayout->addWidget( m_wordTest, row++, 0 );
    
@@ -69,29 +76,29 @@ FenetrePrincipale::FenetrePrincipale( std::vector< depistage::gui::ElementGUI * 
    mainLayout->addWidget( boutonTestExcel, row++, 0 );
 
    connect( boutonTestExcel, SIGNAL( clicked() ),
-            this,            SLOT(   ajouter() ) );
+            this,            SLOT(   ajouter() ) );*/
    
    mainWidget->setLayout( mainLayout );
    setCentralWidget( mainWidget );
 }
 
 // debug à virer !
-void FenetrePrincipale::remplacer()
-{
-   depistage::office::Word word;
-   depistage::office::WordDocument document = word.open( m_wordTest->getChemin().toStdString() );
-   document.replace( "chat", "lion" );
-}
+//void FenetrePrincipale::remplacer()
+//{
+//   depistage::office::Word word;
+//   depistage::office::WordDocument document = word.open( m_wordTest->getChemin().toStdString() );
+//   document.replace( "chat", "lion" );
+//}
 
-void FenetrePrincipale::ajouter()
-{
-   depistage::office::Excel excel;
-   depistage::office::ExcelDocument document = excel.open( m_excelTest->getChemin().toStdString() );
-   depistage::office::ExcelOnglet onglet = document.recupererOnglet( 1 );
-   std::vector< std::string > informations;
-   informations.push_back( "Toto" );
-   onglet.ajouterLigne( informations );
-}
+//void FenetrePrincipale::ajouter()
+//{
+//   depistage::office::Excel excel;
+//   depistage::office::ExcelDocument document = excel.open( m_excelTest->getChemin().toStdString() );
+//   depistage::office::ExcelOnglet onglet = document.recupererOnglet( 1 );
+//   std::vector< std::string > informations;
+//   informations.push_back( "Toto" );
+//   onglet.ajouterLigne( informations );
+//}
 
 // fin debug à virer !
 
