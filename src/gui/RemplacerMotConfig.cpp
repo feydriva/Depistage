@@ -17,10 +17,6 @@ RemplacerMotConfig::RemplacerMotConfig( const QString & labelStr, const QString 
    m_motARemplacer = new QLineEdit();
    m_motARemplacer->setText( motARemplacer );
    mainLayout->addWidget( m_motARemplacer );
-   QLabel * labelPar = new QLabel( tr( " par " ) );
-   mainLayout->addWidget( labelPar );
-   m_motParLequelRemplacer = new QLineEdit();
-   mainLayout->addWidget( m_motParLequelRemplacer );
    
    setLayout( mainLayout );
 }
@@ -28,11 +24,6 @@ RemplacerMotConfig::RemplacerMotConfig( const QString & labelStr, const QString 
 QString RemplacerMotConfig::motARemplacer() const
 {
    return m_motARemplacer->text();
-}
-
-QString RemplacerMotConfig::motParLequelRemplacer() const
-{
-   return m_motParLequelRemplacer->text();
 }
 
 } }

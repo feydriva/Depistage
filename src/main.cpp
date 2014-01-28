@@ -15,12 +15,14 @@ int main( int argc, char *argv[] )
 
    depistage::main::ProgrammeEtiquettes programmeEtiquettes;
 
-   depistage::gui::FenetrePrincipale fenetre( programmeEtiquettes.getElementsGUI( ) );
+   depistage::gui::FenetrePrincipale fenetre( programmeEtiquettes );
    fenetre.show();
 
 //   depistage::office::Word word;
 //   depistage::office::WordDocument document = word.open( "C:\\test.doc" );
 //   document.replace( "chat", "lion" );
+
+   //programmeEtiquettes.sauverConfig();
 
    return app.exec();
 }

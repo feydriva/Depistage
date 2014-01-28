@@ -70,6 +70,11 @@ void WordDocument::replace( const std::string & textToFind, const std::string & 
                       params);
 }
 
+void WordDocument::imprimer() const
+{
+   m_document->querySubObject( "PrintOut()" );
+}
+
 bool WordDocument::isOpen() const
 {
    return m_document.get() != nullptr;

@@ -3,9 +3,9 @@
 #define DEPISTAGE_GUI_FENETREPRINCIPALE_HPP
 
 #include "ElementGUI.hpp"
-//#include "RemplacerMot.hpp"
-//#include "RemplacerMotConfig.hpp"
-//#include "SelectionFichier.hpp"
+
+// Todo : a rendre generique
+#include <main/ProgrammeEtiquettes.hpp>
 
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
@@ -17,7 +17,7 @@ class FenetrePrincipale : public QMainWindow
 {
    Q_OBJECT
 public :
-   FenetrePrincipale( std::vector< depistage::gui::ElementGUI * > widgets, QWidget * parent = nullptr );
+   FenetrePrincipale( const main::ProgrammeEtiquettes & programme, QWidget * parent = nullptr );
 
 private :
    //RemplacerMot * m_motRemplacerChat;

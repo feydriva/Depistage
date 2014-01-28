@@ -5,6 +5,7 @@ SET( QT_USE_QTXML TRUE )
 ADD_DEFINITIONS( ${QT_DEFINITIONS} )
 
 INCLUDE_DIRECTORIES( .
+                     config
                      gui
                      main
                      office
@@ -15,6 +16,7 @@ CONFIGURE_FILE( ${CMAKE_CURRENT_SOURCE_DIR}/config_version.hpp.cmake ${CMAKE_CUR
 
 SET( SOURCES_RC resources/resource.qrc )
 
+FILE( GLOB CONFIG_SRC "config/*.*" )
 FILE( GLOB GUI_SRC "gui/*.*" )
 FILE( GLOB MAIN_SRC "main/*.*" )
 FILE( GLOB OFFICE_SRC "office/*.*" )
@@ -25,11 +27,13 @@ FILE( GLOB OFFICE_SRC "office/*.*" )
 #qt5_wrap_cpp( QTFILE_HEADERS_MOC ${QTFILE_HEADERS} )
 qt5_add_resources( SOURCES_RC_SRC ${SOURCES_RC} )
 
+SOURCE_GROUP( Config FILES ${CONFIG_SRC} )
 SOURCE_GROUP( Gui FILES ${GUI_SRC} )
 SOURCE_GROUP( Main FILES ${MAIN_SRC} )
 SOURCE_GROUP( Office FILES ${OFFICE_SRC} )
 
 ADD_LIBRARY( DepistageCore
+             ${CONFIG_SRC}
              ${GUI_SRC}
              ${MAIN_SRC}
              ${OFFICE_SRC}
@@ -42,6 +46,6 @@ ADD_EXECUTABLE( ${PROJECT_NAME}
                 ${GUI_TYPE}
                 main.cpp )
 
-qt5_use_modules( ${PROJECT_NAME} Widgets )
+qt5_use_modules( ${PROJECT_NAME} Widgets Xml )
 
 TARGET_LINK_LIBRARIES( ${PROJECT_NAME} ${QT_LIBRARIES} DepistageCore )

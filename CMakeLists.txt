@@ -40,6 +40,7 @@ ENDIF ( APPLE )
 find_package( Qt5Widgets REQUIRED )
 find_package( Qt5Test REQUIRED)
 find_package( Qt5AxContainer REQUIRED)
+find_package( Qt5Xml REQUIRED)
 
 
 set(QT_QTTEST_LIBRARY ${Qt5Test_LIBRARIES})
@@ -48,12 +49,14 @@ set(QT_LIBRARIES
 	${Qt5Core_LIBRARIES}
 	${Qt5Widgets_LIBRARIES}
 	${Qt5AxContainer_LIBRARIES}
+	${Qt5Xml_LIBRARIES}
 )
 
 include_directories(
 	${Qt5Core_INCLUDE_DIRS}
 	${Qt5Widgets_INCLUDE_DIRS}
 	${Qt5AxContainer_INCLUDE_DIRS}
+	${Qt5Xml_INCLUDE_DIRS}
 )
 
 LINK_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/lib )

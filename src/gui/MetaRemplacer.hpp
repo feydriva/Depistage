@@ -19,8 +19,12 @@ class MetaRemplacer : public ElementGUI
 public :
    MetaRemplacer( const QString & labelStr, const QString & m_motARemplacer,
                   QWidget * parentWidget = nullptr );
+
    virtual QWidget * widgetBasic() const override;
    virtual QWidget * widgetConfig() const override;
+
+   QString motParLequelRemplacer( ) const;
+   QString motARemplacer( ) const;
 
 private :
    RemplacerMot * m_remplacerBasic;

@@ -16,11 +16,9 @@ public :
    RemplacerMotConfig( const QString & labelStr, const QString & motARemplacer,
                        QWidget * parent = nullptr );
    QString motARemplacer() const;
-   QString motParLequelRemplacer() const;
 
 private :
    QLineEdit * m_motARemplacer;
-   QLineEdit * m_motParLequelRemplacer;
 };
 
 } }

@@ -4,6 +4,8 @@
 
 #include "ElementGUI.hpp"
 
+#include "SelectionFichierWidget.hpp"
+
 #include <QtCore/QString>
 
 #include <QtWidgets/QLineEdit>
@@ -21,8 +23,10 @@ public :
    virtual QWidget * widgetBasic() const override;
    virtual QWidget * widgetConfig() const override;
 
+   QString getChemin() const;
+
 private :
-   QWidget * m_widgetConfig;
+   SelectionFichierWidget * m_widgetConfig;
 };
 
 } }

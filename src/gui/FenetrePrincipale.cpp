@@ -13,10 +13,11 @@
 
 namespace depistage { namespace gui {
 
-FenetrePrincipale::FenetrePrincipale( std::vector< depistage::gui::ElementGUI * > widgets,
+FenetrePrincipale::FenetrePrincipale( const main::ProgrammeEtiquettes & programme,
                                       QWidget * parent )
    : QMainWindow( parent )
 {
+   std::vector< depistage::gui::ElementGUI * > widgets = programme.getElementsGUI();
    QWidget * mainWidget = new QWidget();
    QGridLayout * mainLayout = new QGridLayout();
    
@@ -37,6 +38,11 @@ FenetrePrincipale::FenetrePrincipale( std::vector< depistage::gui::ElementGUI * 
          configLayout->addWidget((*iteWidget)->widgetConfig());
       }
    }
+
+   QPushButton * sauvButton = new QPushButton( tr( "Sauvegarder la configuration" ) );
+   configLayout->addWidget( sauvButton );
+   connect( sauvButton, SIGNAL( clicked( ) ),
+            &programme, SLOT( sauverConfig( ) ) );
 
    mainLayout->addLayout( basicLayout, row++, 0 );
 
