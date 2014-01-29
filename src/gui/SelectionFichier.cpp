@@ -3,9 +3,12 @@
 
 namespace depistage { namespace gui {
 
-SelectionFichier::SelectionFichier(const QString & labelStr, const QString & message,
-                                                const QString & filtre, QWidget * parent )
-   : m_widgetConfig( new SelectionFichierWidget( labelStr, message, filtre, parent ) )
+SelectionFichier::SelectionFichier(const QString & labelStr,
+                                   const QString & message,
+                                   const QString & filtre,
+                                   const QString & chemin,
+                                   QWidget * parent )
+   : m_widgetConfig( new SelectionFichierWidget( labelStr, message, filtre, chemin, parent ) )
 {
 }
 

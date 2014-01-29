@@ -5,11 +5,14 @@
 #include "ElementGUI.hpp"
 
 // Todo : a rendre generique
-#include <main/ProgrammeEtiquettes.hpp>
 
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QWidget>
+
+namespace depistage { namespace main {
+class ProgrammeEtiquettes;
+} }
 
 namespace depistage { namespace gui {
 

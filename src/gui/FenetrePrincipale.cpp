@@ -1,6 +1,8 @@
 
 #include "FenetrePrincipale.hpp"
 
+#include <main/ProgrammeEtiquettes.hpp>
+
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QPushButton>
 

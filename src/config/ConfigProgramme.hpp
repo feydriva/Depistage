@@ -19,6 +19,9 @@ public:
 
    const QString & getLabel() const;
 
+   const RemplacerMotConfig & recupRemplacerMot( const QString & label );
+   const SelectionFichierConfig & recupSelectionFichier( const QString & label );
+
    void miseAJourRemplacerMotConfig( const RemplacerMotConfig & remplacerMotConfig );
    void miseAJourSelectionFichierConfig( const SelectionFichierConfig & remplacerMotConfig );
 

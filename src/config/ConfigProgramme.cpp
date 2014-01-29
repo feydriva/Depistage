@@ -7,7 +7,7 @@
 
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
-
+#include <iostream>
 namespace depistage { namespace config {
 
 namespace {
@@ -30,6 +30,16 @@ ConfigProgramme::ConfigProgramme( const QString & label )
 const QString & ConfigProgramme::getLabel() const
 {
    return m_label;
+}
+
+const RemplacerMotConfig & ConfigProgramme::recupRemplacerMot( const QString & label )
+{
+   return m_remplacerMotConfigs[ label ];
+}
+
+const SelectionFichierConfig & ConfigProgramme::recupSelectionFichier( const QString & label )
+{
+   return m_selectionFichierConfigs[ label ];
 }
 
 void ConfigProgramme::miseAJourRemplacerMotConfig( const RemplacerMotConfig & remplacerMotConfig )
@@ -61,7 +71,7 @@ ConfigProgramme ConfigProgramme::chargerXML( const QString & chemin )
    file.close();
 
    QDomElement programmes = depistage.documentElement( );
-   ConfigProgramme config( programmes.firstChildElement( labelLabel ).text( ) );
+   ConfigProgramme config( programmes.firstChildElement( labelLabel ).text() );
 
    QDomElement programme = programmes.firstChildElement( labelProgramme );
    for ( ;
@@ -84,7 +94,6 @@ ConfigProgramme ConfigProgramme::chargerXML( const QString & chemin )
       {
          config.miseAJourSelectionFichierConfig(
             SelectionFichierConfig::chargerXML( noeudSelectionFichier ) );
-
       }
    }
    return config;
@@ -97,15 +106,17 @@ void ConfigProgramme::sauverXML( const ConfigProgramme & config, const QString &
       = depistage.createProcessingInstruction( "xml", "version='1.0' encoding='UTF-8'" );
    depistage.appendChild( header );
 
-   QDomElement programmes = depistage.createElement( labelProgrammes );
+   QDomElement programmes = depistage.createElement( labelGlobal );
    depistage.appendChild( programmes );
 
    QDomElement programme = depistage.createElement( labelProgramme );
    programmes.appendChild( programme );
 
-   programme.appendChild( depistage.createTextNode( config.m_label ) );
+   QDomElement label = depistage.createElement( labelLabel );
+   programme.appendChild( label );
+   label.appendChild( depistage.createTextNode( config.m_label ) );
    QDomElement parametres = depistage.createElement( labelParametres );
-   programmes.appendChild( parametres );
+   programme.appendChild( parametres );
    for ( auto currentRemplacerMot : config.m_remplacerMotConfigs )
    {
       QDomElement remplacerMot = depistage.createElement( labelRemplacerMot );

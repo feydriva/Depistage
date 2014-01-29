@@ -17,8 +17,11 @@ class SelectionFichier : public ElementGUI
 {
    Q_OBJECT
 public :
-   SelectionFichier( const QString & labelStr, const QString & message,
-                     const QString & filtre, QWidget * parent = nullptr );
+   SelectionFichier( const QString & labelStr,
+                     const QString & message,
+                     const QString & filtre,
+                     const QString & chemin,
+                     QWidget * parent = nullptr );
 
    virtual QWidget * widgetBasic() const override;
    virtual QWidget * widgetConfig() const override;
