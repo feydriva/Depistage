@@ -7,7 +7,7 @@
 namespace depistage { namespace gui {
 
 RemplacerMot::RemplacerMot( const QString & labelStr, QWidget * parent )
-	: QWidget( parent )
+   : Remplacer( parent )
 {
    QHBoxLayout * mainLayout = new QHBoxLayout();
 
@@ -15,6 +15,8 @@ RemplacerMot::RemplacerMot( const QString & labelStr, QWidget * parent )
    mainLayout->addWidget( labelMotRemplacer );
    m_motParLequelRemplacer = new QLineEdit();
    mainLayout->addWidget( m_motParLequelRemplacer );
+   connect( m_motParLequelRemplacer, SIGNAL( textChanged( const QString & ) ),
+            this,                    SIGNAL( texteModifie( const QString & ) ) );
    
    setLayout( mainLayout );
 }

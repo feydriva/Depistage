@@ -7,6 +7,8 @@
 #include <gui/ElementGUI.hpp>
 #include <gui/MetaRemplacer.hpp>
 #include <gui/SelectionFichier.hpp>
+#include <gui/WidgetCompteur.hpp>
+#include <gui/WidgetTexteReadOnly.hpp>
 
 namespace depistage { namespace main {
 
@@ -22,13 +24,18 @@ private:
    std::vector< gui::ElementGUI * > m_elementsGUI;
 
    gui::MetaRemplacer * m_codePatient;
+   gui::WidgetCompteur * m_nombreCodePatient;
+   gui::WidgetTexteReadOnly * m_dernierCodePatient;
    gui::MetaRemplacer * m_sex;
    gui::MetaRemplacer * m_dateDeNaissance;
 
    gui::SelectionFichier * m_fichierWord;
-   gui::SelectionFichier * m_fichierExcel;
+
+   void nouveauDernierCodePatient();
 
 private slots:
+   void nouveauNombreCodePatient( int nouveauNombre );
+   void codePatientModifie( const QString & nouveauCodePatient );
    void lancerGeneration();
    void sauverConfig() const;
 };

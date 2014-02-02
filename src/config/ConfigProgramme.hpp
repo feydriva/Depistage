@@ -2,7 +2,7 @@
 #ifndef DEPISTAGE_CONFIG_CONFIG_PROGRAMME_HPP
 #define DEPISTAGE_CONFIG_CONFIG_PROGRAMME_HPP
 
-#include "RemplacerMotConfig.hpp"
+#include "RemplacerConfig.hpp"
 #include "SelectionFichierConfig.hpp"
 
 #include <QtCore/QObject>
@@ -19,11 +19,11 @@ public:
 
    const QString & getLabel() const;
 
-   const RemplacerMotConfig & recupRemplacerMot( const QString & label );
+   const RemplacerConfig & recupRemplacerMot( const QString & label );
    const SelectionFichierConfig & recupSelectionFichier( const QString & label );
 
-   void miseAJourRemplacerMotConfig( const RemplacerMotConfig & remplacerMotConfig );
-   void miseAJourSelectionFichierConfig( const SelectionFichierConfig & remplacerMotConfig );
+   void miseAJourRemplacerConfig( const RemplacerConfig & RemplacerConfig );
+   void miseAJourSelectionFichierConfig( const SelectionFichierConfig & RemplacerConfig );
 
    static ConfigProgramme chargerXML( const QString & chemin );
    static void sauverXML( const ConfigProgramme & config, const QString & chemin );
@@ -32,7 +32,7 @@ private:
    typedef QString Label;
 
    QString m_label;
-   std::map< Label, RemplacerMotConfig > m_remplacerMotConfigs;
+   std::map< Label, RemplacerConfig > m_RemplacerConfigs;
    std::map< Label, SelectionFichierConfig > m_selectionFichierConfigs;
 };
 

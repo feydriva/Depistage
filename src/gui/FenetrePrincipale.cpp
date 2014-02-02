@@ -63,7 +63,7 @@ FenetrePrincipale::FenetrePrincipale( const main::ProgrammeEtiquettes & programm
    /*m_motRemplacerChat = new RemplacerMot( "chat" );
    mainLayout->addWidget( m_motRemplacerChat, row++, 0 );
    
-   m_motRemplacerTest = new RemplacerMotConfig();
+   m_motRemplacerTest = new RemplacerConfig();
    mainLayout->addWidget( m_motRemplacerTest, row++, 0 );*/
    
    /*m_wordTest = new SelectionFichier( tr( "Word de test : " ),

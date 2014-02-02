@@ -9,11 +9,11 @@
 
 namespace depistage { namespace gui {
 
-class RemplacerMotConfig : public QWidget
+class RemplacerConfig : public QWidget
 {
    Q_OBJECT
 public :
-   RemplacerMotConfig( const QString & labelStr, const QString & motARemplacer,
+   RemplacerConfig( const QString & labelStr, const QString & motARemplacer,
                        QWidget * parent = nullptr );
    QString motARemplacer() const;
 

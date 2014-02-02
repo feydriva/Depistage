@@ -15,7 +15,8 @@ class Word
 {
    public:
       Word( QObject * parent = NULL );
-      ~Word();
+
+      void quit();
 
       WordDocument open( const std::string & path );
 

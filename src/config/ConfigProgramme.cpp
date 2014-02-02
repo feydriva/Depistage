@@ -32,9 +32,9 @@ const QString & ConfigProgramme::getLabel() const
    return m_label;
 }
 
-const RemplacerMotConfig & ConfigProgramme::recupRemplacerMot( const QString & label )
+const RemplacerConfig & ConfigProgramme::recupRemplacerMot( const QString & label )
 {
-   return m_remplacerMotConfigs[ label ];
+   return m_RemplacerConfigs[ label ];
 }
 
 const SelectionFichierConfig & ConfigProgramme::recupSelectionFichier( const QString & label )
@@ -42,9 +42,9 @@ const SelectionFichierConfig & ConfigProgramme::recupSelectionFichier( const QSt
    return m_selectionFichierConfigs[ label ];
 }
 
-void ConfigProgramme::miseAJourRemplacerMotConfig( const RemplacerMotConfig & remplacerMotConfig )
+void ConfigProgramme::miseAJourRemplacerConfig( const RemplacerConfig & RemplacerConfig )
 {
-   m_remplacerMotConfigs[ remplacerMotConfig.getLabel() ] = remplacerMotConfig;
+   m_RemplacerConfigs[ RemplacerConfig.getLabel() ] = RemplacerConfig;
 }
 
 void ConfigProgramme::miseAJourSelectionFichierConfig(
@@ -85,7 +85,7 @@ ConfigProgramme ConfigProgramme::chargerXML( const QString & chemin )
             !noeudRemplacerMot.isNull( );
             noeudRemplacerMot = noeudRemplacerMot.nextSiblingElement( labelRemplacerMot ) )
       {
-         config.miseAJourRemplacerMotConfig( RemplacerMotConfig::chargerXML( noeudRemplacerMot ) );
+         config.miseAJourRemplacerConfig( RemplacerConfig::chargerXML( noeudRemplacerMot ) );
       }
       QDomElement noeudSelectionFichier = parametres.firstChildElement( labelSelectionFichier );
       for ( ;
@@ -117,10 +117,10 @@ void ConfigProgramme::sauverXML( const ConfigProgramme & config, const QString &
    label.appendChild( depistage.createTextNode( config.m_label ) );
    QDomElement parametres = depistage.createElement( labelParametres );
    programme.appendChild( parametres );
-   for ( auto currentRemplacerMot : config.m_remplacerMotConfigs )
+   for ( auto currentRemplacerMot : config.m_RemplacerConfigs )
    {
       QDomElement remplacerMot = depistage.createElement( labelRemplacerMot );
-      RemplacerMotConfig::sauverXML( currentRemplacerMot.second, remplacerMot );
+      RemplacerConfig::sauverXML( currentRemplacerMot.second, remplacerMot );
       parametres.appendChild( remplacerMot );
    }
    for ( auto currentSelectionFichier : config.m_selectionFichierConfigs )

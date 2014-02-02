@@ -29,9 +29,9 @@ Word::Word( QObject * parent )
 
 }
 
-Word::~Word()
+void Word::quit()
 {
-   //m_word->dynamicCall( "Quit(void)" );
+   m_word->dynamicCall( "Quit()" );
 }
 
 void Word::initializeDocuments()

@@ -15,6 +15,8 @@ class WordDocument
    public:
       WordDocument( QAxObject * wordDocument, QObject * parent = NULL );
 
+      void close();
+
       void replace( const std::string & textToFind, const std::string & textToReplace );
       void imprimer() const;
 

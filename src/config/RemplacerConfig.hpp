@@ -8,16 +8,16 @@
 
 namespace depistage { namespace config {
 
-class RemplacerMotConfig
+class RemplacerConfig
 {
 public:
-   explicit RemplacerMotConfig( const QString & label = "", const QString & motARemplacer = "" );
+   explicit RemplacerConfig( const QString & label = "", const QString & motARemplacer = "" );
 
    const QString & getLabel() const;
    const QString & getMotARemplacer() const;
 
-   static RemplacerMotConfig chargerXML( const QDomElement & noeudRemplacerMot );
-   static void sauverXML( const RemplacerMotConfig & config, QDomElement & noeudRemplacerMot );
+   static RemplacerConfig chargerXML( const QDomElement & noeudRemplacerMot );
+   static void sauverXML( const RemplacerConfig & config, QDomElement & noeudRemplacerMot );
 
 private:
    QString m_label;

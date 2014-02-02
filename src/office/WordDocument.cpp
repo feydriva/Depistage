@@ -26,26 +26,35 @@ WordDocument::WordDocument( QAxObject * document, QObject * parent )
    connectException( m_parent, m_document.get() );
 }
 
-QList< QVariant > retrieveDefaultParam()
+void WordDocument::close()
 {
-   const std::string local_wdRepalceAll = "2";
-   QList< QVariant > params;
-   params << QVariant( "" );                            // FindText
-   params << QVariant( "0" );                           // MatchCase
-   params << QVariant( "0" );                           // MatchWholeWord 
-   params << QVariant( "0" );                           // MatchWildcards 
-   params << QVariant( "0" );                           // MatchSoundsLike 
-   params << QVariant( "0" );                           // MatchAllWordForms 
-   params << QVariant( true );                          // Forward 
-   params << QVariant( "0" );                           // Wrap 
-   params << QVariant( "0" );                           // Format 
-   params << QVariant( "" );                            // ReplaceWith 
-   params << QVariant( local_wdRepalceAll.c_str() );  // Replace
-   params << QVariant( "0" );                           // MatchKashida
-   params << QVariant( "0" );                           // MatchDiacritics
-   params << QVariant( "0" );                           // MatchAlefHamza
-   params << QVariant( "0" );                           // MatchControl
-   return params;
+   m_document->dynamicCall( "Close()" );
+}
+
+namespace {
+
+   QList< QVariant > retrieveDefaultParam()
+   {
+      const std::string local_wdRepalceAll = "2";
+      QList< QVariant > params;
+      params << QVariant( "" );                            // FindText
+      params << QVariant( "0" );                           // MatchCase
+      params << QVariant( "0" );                           // MatchWholeWord 
+      params << QVariant( "0" );                           // MatchWildcards 
+      params << QVariant( "0" );                           // MatchSoundsLike 
+      params << QVariant( "0" );                           // MatchAllWordForms 
+      params << QVariant( true );                          // Forward 
+      params << QVariant( "0" );                           // Wrap 
+      params << QVariant( "0" );                           // Format 
+      params << QVariant( "" );                            // ReplaceWith 
+      params << QVariant( local_wdRepalceAll.c_str() );  // Replace
+      params << QVariant( "0" );                           // MatchKashida
+      params << QVariant( "0" );                           // MatchDiacritics
+      params << QVariant( "0" );                           // MatchAlefHamza
+      params << QVariant( "0" );                           // MatchControl
+      return params;
+   }
+
 }
 
 void WordDocument::replace( const std::string & textToFind, const std::string & textToReplace )

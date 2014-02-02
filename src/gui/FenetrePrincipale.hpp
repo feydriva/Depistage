@@ -24,7 +24,7 @@ public :
 
 private :
    //RemplacerMot * m_motRemplacerChat;
-   //RemplacerMotConfig * m_motRemplacerTest;
+   //RemplacerConfig * m_motRemplacerTest;
    //SelectionFichier * m_wordTest;
    //SelectionFichier * m_excelTest;
 

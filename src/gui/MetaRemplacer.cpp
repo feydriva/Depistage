@@ -6,10 +6,12 @@
 
 namespace depistage { namespace gui {
 
-MetaRemplacer::MetaRemplacer( const QString & labelStr, const QString & m_motARemplacer,
+MetaRemplacer::MetaRemplacer( Remplacer * widgetRemplacer,
+                              const QString & labelStr,
+                              const QString & m_motARemplacer,
                               QWidget * parentWidget )
-   : m_remplacerBasic( new RemplacerMot( labelStr, parentWidget ) ),
-     m_remplacerConfig( new RemplacerMotConfig( labelStr, m_motARemplacer, parentWidget ) )
+   : m_remplacerBasic( widgetRemplacer ),
+     m_remplacerConfig( new RemplacerConfig( labelStr, m_motARemplacer, parentWidget ) )
 {
 }
 

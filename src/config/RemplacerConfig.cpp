@@ -1,5 +1,5 @@
 
-#include "RemplacerMotConfig.hpp"
+#include "RemplacerConfig.hpp"
 
 namespace depistage { namespace config {
 
@@ -10,28 +10,28 @@ const QString labelMotARemplacer = "motARemplacer";
 
 }
 
-RemplacerMotConfig::RemplacerMotConfig( const QString & label, const QString & motARemplacer )
+RemplacerConfig::RemplacerConfig( const QString & label, const QString & motARemplacer )
    : m_label( label ), m_motARemplacer( motARemplacer )
 {}
 
-const QString & RemplacerMotConfig::getLabel( ) const
+const QString & RemplacerConfig::getLabel( ) const
 {
    return m_label;
 }
 
-const QString & RemplacerMotConfig::getMotARemplacer() const
+const QString & RemplacerConfig::getMotARemplacer() const
 {
    return m_motARemplacer;
 }
 
-RemplacerMotConfig RemplacerMotConfig::chargerXML( const QDomElement & noeudRemplacerMot )
+RemplacerConfig RemplacerConfig::chargerXML( const QDomElement & noeudRemplacerMot )
 {
    QString label = noeudRemplacerMot.firstChildElement( labelLabel ).text();
    QString motARemplacer = noeudRemplacerMot.firstChildElement( labelMotARemplacer ).text();
-   return RemplacerMotConfig( label, motARemplacer );
+   return RemplacerConfig( label, motARemplacer );
 }
 
-void RemplacerMotConfig::sauverXML( const RemplacerMotConfig & config,
+void RemplacerConfig::sauverXML( const RemplacerConfig & config,
                                     QDomElement & noeudRemplacerMot )
 {
    QDomElement label = noeudRemplacerMot.ownerDocument().createElement( labelLabel );

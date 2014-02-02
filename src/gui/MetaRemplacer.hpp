@@ -3,8 +3,9 @@
 #define DEPISTAGE_GUI_META_REMPLACER_HPP
 
 #include "ElementGUI.hpp"
-#include "RemplacerMot.hpp"
-#include "RemplacerMotConfig.hpp"
+#include "Remplacer.hpp"
+#include "RemplacerConfig.hpp"
+#include "RemplacerConfig.hpp"
 
 #include <QtCore/QObject>
 #include <QtCore/QString>
@@ -17,7 +18,9 @@ class MetaRemplacer : public ElementGUI
 {
    Q_OBJECT
 public :
-   MetaRemplacer( const QString & labelStr, const QString & m_motARemplacer,
+   MetaRemplacer( Remplacer * widgetRemplacer,
+                  const QString & labelStr,
+                  const QString & m_motARemplacer,
                   QWidget * parentWidget = nullptr );
 
    virtual QWidget * widgetBasic() const override;
@@ -27,8 +30,8 @@ public :
    QString motARemplacer( ) const;
 
 private :
-   RemplacerMot * m_remplacerBasic;
-   RemplacerMotConfig * m_remplacerConfig;
+   Remplacer * m_remplacerBasic;
+   RemplacerConfig * m_remplacerConfig;
 };
 
 } }

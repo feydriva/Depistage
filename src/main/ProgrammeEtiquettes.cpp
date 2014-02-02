@@ -3,7 +3,11 @@
 
 #include <config/ConfigProgramme.hpp>
 
+#include <gui/BasicElementGUI.hpp>
 #include <gui/BoutonAction.hpp>
+#include <gui/RemplacerCombo.hpp>
+#include <gui/RemplacerDate.hpp>
+#include <gui/RemplacerMot.hpp>
 
 #include <office/Word.hpp>
 #include <office/WordDocument.hpp>
@@ -25,12 +29,40 @@ const QString labelDateDeNaissance = "dateDeNaissance";
 const QString labelWord = "word";
 const QString labelExcel = "excel";
 
-depistage::gui::MetaRemplacer * creerMetaRemplacer( config::ConfigProgramme & config,
+depistage::gui::MetaRemplacer * creerRemplacerMot( ProgrammeEtiquettes * programme,
+                                                   config::ConfigProgramme & config,
+                                                   const QString & labelAffichage,
+                                                   const QString & labelXML )
+{
+   QString motARemplacer = config.recupRemplacerMot( labelXML ).getMotARemplacer();
+   depistage::gui::RemplacerMot * remplacerMot =
+      new depistage::gui::RemplacerMot( labelAffichage );
+   QObject::connect( remplacerMot, SIGNAL( texteModifie( const QString & ) ),
+                     programme,    SLOT( codePatientModifie( const QString & ) ) );
+   return new depistage::gui::MetaRemplacer( remplacerMot, labelAffichage, motARemplacer );
+}
+
+depistage::gui::MetaRemplacer * creerRemplacerDate( config::ConfigProgramme & config,
                                                     const QString & labelAffichage,
                                                     const QString & labelXML )
 {
    QString motARemplacer = config.recupRemplacerMot( labelXML ).getMotARemplacer();
-   return new depistage::gui::MetaRemplacer( labelAffichage, motARemplacer );
+   return new depistage::gui::MetaRemplacer(
+      new depistage::gui::RemplacerDate( labelAffichage ),
+      labelAffichage,
+      motARemplacer );
+}
+
+depistage::gui::MetaRemplacer * creerRemplacerCombo( config::ConfigProgramme & config,
+                                                     const QString & labelAffichage,
+                                                     const std::vector< QString > & choix,
+                                                     const QString & labelXML )
+{
+   QString motARemplacer = config.recupRemplacerMot( labelXML ).getMotARemplacer();
+   return new depistage::gui::MetaRemplacer(
+      new depistage::gui::RemplacerCombo( labelAffichage, choix ),
+      labelAffichage,
+      motARemplacer );
 }
 
 depistage::gui::SelectionFichier * creerSelectionFichier( config::ConfigProgramme & config,
@@ -49,12 +81,26 @@ ProgrammeEtiquettes::ProgrammeEtiquettes()
 {
    config::ConfigProgramme config = config::ConfigProgramme::chargerXML( chemin );
 
-   m_codePatient = creerMetaRemplacer( config, tr( "Code patient" ), labelCodePatient );
+   m_codePatient = creerRemplacerMot( this, config, tr( "Code patient" ), labelCodePatient );
    m_elementsGUI.push_back( m_codePatient );
-   m_sex = creerMetaRemplacer( config, tr( "Sex" ), labelSex );
+
+   m_nombreCodePatient = new gui::WidgetCompteur( tr( "Nombre de code patient : " ) );
+   connect( m_nombreCodePatient, SIGNAL( nouvelleValeur( int ) ),
+            this,                SLOT( nouveauNombreCodePatient( int ) ) );
+   m_elementsGUI.push_back( new gui::BasicElementGUI( m_nombreCodePatient, nullptr ) );
+
+   m_dernierCodePatient = new gui::WidgetTexteReadOnly( tr( "Dernier code patient : " ), "" );
+   m_elementsGUI.push_back( new gui::BasicElementGUI( m_dernierCodePatient, nullptr ) );
+
+   std::vector< QString > choix;
+   choix.push_back( "M" );
+   choix.push_back( "F" );
+   m_sex = creerRemplacerCombo( config, tr( "Sexe" ), choix, labelSex );
    m_elementsGUI.push_back( m_sex );
+
    m_dateDeNaissance =
-      creerMetaRemplacer( config, tr( "Date de naissance" ), labelDateDeNaissance );
+      creerRemplacerDate( config, tr( "Date de naissance" ), labelDateDeNaissance );
+   m_dateDeNaissance->widgetBasic( )->setVisible( m_nombreCodePatient->getNombre() == 1 );
    m_elementsGUI.push_back( m_dateDeNaissance );
 
    gui::BoutonAction * boutonGeneration = new depistage::gui::BoutonAction( "Lancer génération" );
@@ -68,28 +114,6 @@ ProgrammeEtiquettes::ProgrammeEtiquettes()
                                           "Word files  (*.doc *.docx)",
                                           labelWord );
    m_elementsGUI.push_back( m_fichierWord );
-   m_fichierExcel = creerSelectionFichier( config,
-                                          "Fichier excel de rapport : ",
-                                          "Ouvrir un document Excel",
-                                          "Excel files (*.xls *.xlsx)",
-                                          labelWord );
-   m_elementsGUI.push_back( m_fichierExcel );
-}
-
-void ProgrammeEtiquettes::sauverConfig( ) const
-{
-   config::ConfigProgramme config( "etiquettes" );
-   config.miseAJourRemplacerMotConfig(
-      config::RemplacerMotConfig( labelCodePatient, m_codePatient->motARemplacer( ) ) );
-   config.miseAJourRemplacerMotConfig(
-      config::RemplacerMotConfig( labelSex, m_sex->motARemplacer( ) ) );
-   config.miseAJourRemplacerMotConfig(
-      config::RemplacerMotConfig( labelDateDeNaissance, m_dateDeNaissance->motARemplacer( ) ) );
-   config.miseAJourSelectionFichierConfig(
-      config::SelectionFichierConfig( labelWord, m_fichierWord->getChemin( ) ) );
-   config.miseAJourSelectionFichierConfig(
-      config::SelectionFichierConfig( labelExcel, m_fichierExcel->getChemin( ) ) );
-   config::ConfigProgramme::sauverXML( config, chemin );
 }
 
 const std::vector< gui::ElementGUI * > & ProgrammeEtiquettes::getElementsGUI( ) const
@@ -97,40 +121,140 @@ const std::vector< gui::ElementGUI * > & ProgrammeEtiquettes::getElementsGUI( ) 
    return m_elementsGUI;
 }
 
+namespace {
+
+void initialiseA( QString & codePatient, int debut, int fin )
+{
+   for ( int i = debut; i <= fin; ++i )
+   {
+      codePatient[ i ] = QChar( 'A' );
+   }
+}
+
+void initialiseToutA( QString & codePatient )
+{
+   initialiseA( codePatient, 0, codePatient.length() - 1 );
+}
+
+void incrementCodePatient( QString & codePatient, int placeLettre = 0 )
+{
+   if ( placeLettre == codePatient.length() )
+   {
+      initialiseToutA( codePatient );
+      codePatient = "A" + codePatient;
+      return;
+   }
+   int placeDeLaGauche = codePatient.length() - placeLettre - 1;
+   int caractereValue = codePatient[ placeDeLaGauche ].unicode();
+   std::cout << "placeLettre : " << placeLettre << std::endl;
+   std::cout << "placeDeLaGauche : " << placeDeLaGauche << std::endl;
+   std::cout << "codePatient[ placeDeLaGauche ] : " << codePatient[ placeDeLaGauche ].cell() << std::endl;
+   std::cout << "caractereValue : " << caractereValue << std::endl;
+   if ( caractereValue >= QChar( 'A' ).unicode() &&
+        caractereValue < QChar( 'Z' ).unicode() )
+   {
+      codePatient[ placeDeLaGauche ] = caractereValue + 1;
+   }
+   else
+   {
+      codePatient[ placeDeLaGauche ] = QChar( 'A' );
+      incrementCodePatient( codePatient, placeLettre + 1 );
+   }
+}
+
+QString genererDernierCodePatient( const QString & premierCodePatient, int nombreCodePatient )
+{
+   QString dernierCodePatient = premierCodePatient;
+   for ( int i = 1; i < nombreCodePatient; ++i )
+   {
+      incrementCodePatient( dernierCodePatient );
+   }
+   return dernierCodePatient;
+}
+
+}
+
+void ProgrammeEtiquettes::nouveauDernierCodePatient()
+{
+   if ( m_codePatient && m_nombreCodePatient && m_dernierCodePatient )
+   {
+      m_dernierCodePatient->setTexte(
+         genererDernierCodePatient( m_codePatient->motParLequelRemplacer(),
+                                    m_nombreCodePatient->getNombre() ) );
+   }
+}
+
+void ProgrammeEtiquettes::nouveauNombreCodePatient( int nouveauNombre )
+{
+   if ( m_dateDeNaissance )
+   {
+      m_dateDeNaissance->widgetBasic()->setVisible( nouveauNombre == 1 );
+   }
+   nouveauDernierCodePatient();
+}
+
+void ProgrammeEtiquettes::codePatientModifie( const QString & )
+{
+   nouveauDernierCodePatient();
+}
+
+namespace {
+
+void lancerGenerationWord( const QString & cheminWord,
+                           const QString & codePatientAvant, const QString & codePatientApres,
+                           const QString & sexAvant, const QString & sexApres,
+                           const QString & dateAvant, const QString & dateApres,
+                           int nombreCodePatient )
+{
+   QString dateVrai = nombreCodePatient == 1 ? dateApres : "";
+   depistage::office::Word word;
+   depistage::office::WordDocument document = word.open( cheminWord.toStdString() );
+   document.replace( sexAvant.toStdString(), sexApres.toStdString() );
+   document.replace( dateAvant.toStdString(), dateVrai.toStdString() );
+
+   QString precCodePatient = codePatientAvant;
+   QString prochainCodePatient = codePatientApres;
+   for ( int i = 1; i <= nombreCodePatient; ++i )
+   {
+      document.replace( precCodePatient.toStdString(), prochainCodePatient.toStdString() );
+      document.imprimer();
+      precCodePatient = prochainCodePatient;
+      incrementCodePatient( prochainCodePatient );
+   }
+   word.quit();
+}
+
+}
+
 void ProgrammeEtiquettes::lancerGeneration()
 {
+
    if ( m_fichierWord->getChemin() != "" &&
         m_codePatient->motARemplacer( ) != "" &&
         m_sex->motARemplacer( ) != "" &&
-        m_dateDeNaissance->motARemplacer( ) != "" )
+        ( m_nombreCodePatient->getNombre() > 1 ||  m_dateDeNaissance->motARemplacer( ) != "" ) )
    {
-      depistage::office::Word word;
-      depistage::office::WordDocument document =
-         word.open( m_fichierWord->getChemin().toStdString() );
-      document.replace( m_codePatient->motARemplacer().toStdString(),
-                        m_codePatient->motParLequelRemplacer().toStdString() );
-      document.replace( m_sex->motARemplacer().toStdString(),
-                        m_sex->motParLequelRemplacer().toStdString() );
-      document.replace( m_dateDeNaissance->motARemplacer( ).toStdString( ),
-                        m_dateDeNaissance->motParLequelRemplacer().toStdString() );
-      document.imprimer();
+      lancerGenerationWord(
+         m_fichierWord->getChemin(),
+         m_codePatient->motARemplacer(), m_codePatient->motParLequelRemplacer(),
+         m_sex->motARemplacer(), m_sex->motParLequelRemplacer(),
+         m_dateDeNaissance->motARemplacer(), m_dateDeNaissance->motParLequelRemplacer(),
+         m_nombreCodePatient->getNombre() );
    }
+}
 
-   if ( m_fichierExcel->getChemin( ) != "" &&
-        m_codePatient->motARemplacer( ) != "" &&
-        m_sex->motARemplacer( ) != "" &&
-        m_dateDeNaissance->motARemplacer( ) != "" )
-   {
-      depistage::office::Excel excel;
-      depistage::office::ExcelDocument document =
-         excel.open( m_fichierExcel->getChemin( ).toStdString( ) );
-      depistage::office::ExcelOnglet onglet = document.recupererOnglet( 1 );
-      std::vector< std::string > informations;
-      informations.push_back( m_codePatient->motParLequelRemplacer( ).toStdString( ) );
-      informations.push_back( m_sex->motParLequelRemplacer( ).toStdString( ) );
-      informations.push_back( m_dateDeNaissance->motParLequelRemplacer( ).toStdString( ) );
-      onglet.ajouterLigne( informations );
-   }
+void ProgrammeEtiquettes::sauverConfig( ) const
+{
+   config::ConfigProgramme config( "etiquettes" );
+   config.miseAJourRemplacerConfig(
+      config::RemplacerConfig( labelCodePatient, m_codePatient->motARemplacer( ) ) );
+   config.miseAJourRemplacerConfig(
+      config::RemplacerConfig( labelSex, m_sex->motARemplacer( ) ) );
+   config.miseAJourRemplacerConfig(
+      config::RemplacerConfig( labelDateDeNaissance, m_dateDeNaissance->motARemplacer( ) ) );
+   config.miseAJourSelectionFichierConfig(
+      config::SelectionFichierConfig( labelWord, m_fichierWord->getChemin( ) ) );
+   config::ConfigProgramme::sauverXML( config, chemin );
 }
 
 } }

@@ -13,7 +13,7 @@ SelectionFichierWidget::SelectionFichierWidget( const QString & labelStr,
                                                 const QString & filtre,
                                                 const QString & chemin,
                                                 QWidget * parent )
-	: QWidget( parent ),
+   : QWidget( parent ),
      m_message( message ), m_filtre( filtre )
 {
    QHBoxLayout * mainLayout = new QHBoxLayout();

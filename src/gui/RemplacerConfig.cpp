@@ -1,12 +1,12 @@
 
-#include "RemplacerMotConfig.hpp"
+#include "RemplacerConfig.hpp"
 
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
 
 namespace depistage { namespace gui {
 
-RemplacerMotConfig::RemplacerMotConfig( const QString & labelStr, const QString & motARemplacer,
+RemplacerConfig::RemplacerConfig( const QString & labelStr, const QString & motARemplacer,
                                         QWidget * parent )
 	: QWidget( parent )
 {
@@ -21,7 +21,7 @@ RemplacerMotConfig::RemplacerMotConfig( const QString & labelStr, const QString 
    setLayout( mainLayout );
 }
 
-QString RemplacerMotConfig::motARemplacer() const
+QString RemplacerConfig::motARemplacer() const
 {
    return m_motARemplacer->text();
 }
