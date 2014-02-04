@@ -26,11 +26,6 @@ WordDocument::WordDocument( QAxObject * document, QObject * parent )
    connectException( m_parent, m_document.get() );
 }
 
-void WordDocument::close()
-{
-   m_document->dynamicCall( "Close()" );
-}
-
 namespace {
 
    QList< QVariant > retrieveDefaultParam()

@@ -20,7 +20,7 @@ void connectException( const QObject * parent, const QAxObject * axObject )
 }
 
 Word::Word( QObject * parent )
-   : m_word( new QAxObject( "Word.Application", NULL ) ), m_parent( parent )
+   : m_word( new QAxObject( "Word.Application", nullptr ) ), m_parent( parent )
 {
    connectException( m_parent, m_word.get() );
 
@@ -29,9 +29,9 @@ Word::Word( QObject * parent )
 
 }
 
-void Word::quit()
+void Word::quit( ModeFermeture::Enum modeFermeture  )
 {
-   m_word->dynamicCall( "Quit()" );
+   m_word->dynamicCall( "Quit(int)", modeFermeture );
 }
 
 void Word::initializeDocuments()
@@ -48,6 +48,11 @@ WordDocument Word::open( const std::string & path )
    initializeDocuments();
    m_documents->dynamicCall( "Open(const QString&)", path.c_str() );
    return WordDocument( (QAxObject *) m_word->querySubObject( "ActiveDocument" ), m_parent );
+}
+
+Dialog Word::recupererDialog( Dialog::Enum nom )
+{
+   return Dialog( (QAxObject *)m_word->querySubObject( "Dialogs(int)", nom ), m_parent );
 }
 
 bool Word::isLaunched() const

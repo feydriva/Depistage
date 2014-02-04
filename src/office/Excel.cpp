@@ -20,7 +20,7 @@ void connectException( const QObject * parent, const QAxObject * axObject )
 }
 
 Excel::Excel( QObject * parent )
-   : m_excel( new QAxObject( "Excel.Application", NULL ) ), m_parent( parent )
+   : m_excel( new QAxObject( "Excel.Application", nullptr ) ), m_parent( parent )
 {
    connectException( m_parent, m_excel.get() );
 

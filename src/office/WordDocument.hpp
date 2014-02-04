@@ -12,10 +12,8 @@ namespace depistage { namespace office {
 
 class WordDocument
 {
-   public:
-      WordDocument( QAxObject * wordDocument, QObject * parent = NULL );
-
-      void close();
+public:
+      WordDocument( QAxObject * wordDocument, QObject * parent = nullptr );
 
       void replace( const std::string & textToFind, const std::string & textToReplace );
       void imprimer() const;

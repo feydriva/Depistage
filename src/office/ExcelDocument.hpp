@@ -15,7 +15,7 @@ namespace depistage { namespace office {
 class ExcelDocument
 {
    public:
-      ExcelDocument( QAxObject * workbook, QObject * parent = NULL );
+      ExcelDocument( QAxObject * workbook, QObject * parent = nullptr );
 
       ExcelOnglet recupererOnglet( unsigned int ongletId );
 

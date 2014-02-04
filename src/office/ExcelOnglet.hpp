@@ -13,7 +13,7 @@ namespace depistage { namespace office {
 class ExcelOnglet
 {
    public:
-      ExcelOnglet( QAxObject * onglet, QObject * parent = NULL );
+      ExcelOnglet( QAxObject * onglet, QObject * parent = nullptr );
 
       void ajouterLigne( std::vector< std::string > informations );
 

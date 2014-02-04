@@ -2,6 +2,7 @@
 #ifndef DEPISTAGE_TEST_WORD_HPP
 #define DEPISTAGE_TEST_WORD_HPP
 
+#include "Dialog.hpp"
 #include "WordDocument.hpp"
 
 #include <QtCore/QObject>
@@ -14,11 +15,22 @@ namespace depistage { namespace office {
 class Word
 {
    public:
-      Word( QObject * parent = NULL );
+     struct ModeFermeture
+      {
+         enum Enum
+         {
+            ProposerSauvegarde = -2,
+            Sauvegarde = -1,
+            SansSauvegarde = 0
+         };
+      };
 
-      void quit();
+      Word( QObject * parent = nullptr );
+
+      void quit( ModeFermeture::Enum  modeFermetur = ModeFermeture::ProposerSauvegarde );
 
       WordDocument open( const std::string & path );
+      Dialog recupererDialog( Dialog::Enum nom );
 
       bool isLaunched() const;
 

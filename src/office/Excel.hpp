@@ -14,7 +14,7 @@ namespace depistage { namespace office {
 class Excel
 {
    public:
-      Excel( QObject * parent = NULL );
+      Excel( QObject * parent = nullptr );
       ~Excel();
 
       ExcelDocument open( const std::string & path );

@@ -1,7 +1,6 @@
 
 #include "ExcelOnglet.hpp"
 
-#include <iostream>
 #include <sstream>
 
 namespace depistage { namespace office {

@@ -11,13 +11,14 @@
 
 #include <office/Word.hpp>
 #include <office/WordDocument.hpp>
+#include <office/Dialog.hpp>
 #include <office/Excel.hpp>
 #include <office/ExcelDocument.hpp>
 #include <office/ExcelOnglet.hpp>
 
 #include <string>
 #include <vector>
-#include <iostream>
+
 namespace depistage { namespace main {
 
 namespace {
@@ -144,12 +145,9 @@ void incrementCodePatient( QString & codePatient, int placeLettre = 0 )
       codePatient = "A" + codePatient;
       return;
    }
+
    int placeDeLaGauche = codePatient.length() - placeLettre - 1;
    int caractereValue = codePatient[ placeDeLaGauche ].unicode();
-   std::cout << "placeLettre : " << placeLettre << std::endl;
-   std::cout << "placeDeLaGauche : " << placeDeLaGauche << std::endl;
-   std::cout << "codePatient[ placeDeLaGauche ] : " << codePatient[ placeDeLaGauche ].cell() << std::endl;
-   std::cout << "caractereValue : " << caractereValue << std::endl;
    if ( caractereValue >= QChar( 'A' ).unicode() &&
         caractereValue < QChar( 'Z' ).unicode() )
    {
@@ -217,11 +215,20 @@ void lancerGenerationWord( const QString & cheminWord,
    for ( int i = 1; i <= nombreCodePatient; ++i )
    {
       document.replace( precCodePatient.toStdString(), prochainCodePatient.toStdString() );
-      document.imprimer();
+      if ( i == 1 )
+      {
+         depistage::office::Dialog paramImpression =
+            word.recupererDialog( depistage::office::Dialog::parametreImpression );
+         paramImpression.show();
+      }
+      else
+      {
+         document.imprimer();
+      }
       precCodePatient = prochainCodePatient;
       incrementCodePatient( prochainCodePatient );
    }
-   word.quit();
+   word.quit( depistage::office::Word::ModeFermeture::SansSauvegarde );
 }
 
 }

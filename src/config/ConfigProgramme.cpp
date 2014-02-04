@@ -7,7 +7,7 @@
 
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
-#include <iostream>
+
 namespace depistage { namespace config {
 
 namespace {

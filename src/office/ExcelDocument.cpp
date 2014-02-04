@@ -1,7 +1,6 @@
 
 #include "ExcelDocument.hpp"
 
-#include <iostream>
 #include <sstream>
 
 namespace depistage { namespace office {
