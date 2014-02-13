@@ -212,7 +212,7 @@ void lancerGenerationWord( const QString & cheminWord,
 
    QString precCodePatient = codePatientAvant;
    QString prochainCodePatient = codePatientApres;
-   for ( int i = 1; i <= nombreCodePatient; ++i )
+   for ( int i = 1; i <= nombreCodePatient + 1; ++i )
    {
       document.replace( precCodePatient.toStdString(), prochainCodePatient.toStdString() );
       if ( i == 1 )
