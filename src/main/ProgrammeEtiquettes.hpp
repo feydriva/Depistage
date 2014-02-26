@@ -2,7 +2,10 @@
 #ifndef DEPISTAGE_MAIN_PROGRAMME_ETIQUETTES_HPP
 #define DEPISTAGE_MAIN_PROGRAMME_ETIQUETTES_HPP
 
-#include <QtCore/QObject>
+#include <main/ProgrammeStandart.hpp>
+
+#include <config/ConfigProgramme.hpp>
+#include <config/ConfigProgrammes.hpp>
 
 #include <gui/ElementGUI.hpp>
 #include <gui/MetaRemplacer.hpp>
@@ -12,12 +15,13 @@
 
 namespace depistage { namespace main {
 
-class ProgrammeEtiquettes : public QObject
+class ProgrammeEtiquettes : public ProgrammeStandart
 {
    Q_OBJECT
 public :
-   ProgrammeEtiquettes();
+   ProgrammeEtiquettes( depistage::config::ConfigProgrammes & configs );
 
+   virtual const QString & getTitre() const;
    virtual const std::vector< gui::ElementGUI * > & getElementsGUI() const;
 
 private:
@@ -37,7 +41,7 @@ private slots:
    void nouveauNombreCodePatient( int nouveauNombre );
    void codePatientModifie( const QString & nouveauCodePatient );
    void lancerGeneration();
-   void sauverConfig() const;
+   void sauverConfig();
 };
 
 } }

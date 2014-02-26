@@ -14,7 +14,7 @@ class RemplacerDate : public Remplacer
 {
    Q_OBJECT
 public :
-   RemplacerDate( const QString & labelStr, QWidget * parent = nullptr );
+   RemplacerDate( const QString & labelStr, const QDate & date, QWidget * parent = nullptr );
    virtual QString motParLequelRemplacer() const override;
 
 private :

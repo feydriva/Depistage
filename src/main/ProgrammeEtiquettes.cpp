@@ -5,9 +5,6 @@
 
 #include <gui/BasicElementGUI.hpp>
 #include <gui/BoutonAction.hpp>
-#include <gui/RemplacerCombo.hpp>
-#include <gui/RemplacerDate.hpp>
-#include <gui/RemplacerMot.hpp>
 
 #include <office/Word.hpp>
 #include <office/WordDocument.hpp>
@@ -16,6 +13,8 @@
 #include <office/ExcelDocument.hpp>
 #include <office/ExcelOnglet.hpp>
 
+#include <main/Chargement.hpp>
+
 #include <string>
 #include <vector>
 
@@ -23,66 +22,20 @@ namespace depistage { namespace main {
 
 namespace {
 
-const QString chemin = "config.xml";
+const QString titre = "Etiquettes";
 const QString labelCodePatient = "codePatient";
 const QString labelSex = "sex";
 const QString labelDateDeNaissance = "dateDeNaissance";
 const QString labelWord = "word";
-const QString labelExcel = "excel";
-
-depistage::gui::MetaRemplacer * creerRemplacerMot( ProgrammeEtiquettes * programme,
-                                                   config::ConfigProgramme & config,
-                                                   const QString & labelAffichage,
-                                                   const QString & labelXML )
-{
-   QString motARemplacer = config.recupRemplacerMot( labelXML ).getMotARemplacer();
-   depistage::gui::RemplacerMot * remplacerMot =
-      new depistage::gui::RemplacerMot( labelAffichage );
-   QObject::connect( remplacerMot, SIGNAL( texteModifie( const QString & ) ),
-                     programme,    SLOT( codePatientModifie( const QString & ) ) );
-   return new depistage::gui::MetaRemplacer( remplacerMot, labelAffichage, motARemplacer );
-}
-
-depistage::gui::MetaRemplacer * creerRemplacerDate( config::ConfigProgramme & config,
-                                                    const QString & labelAffichage,
-                                                    const QString & labelXML )
-{
-   QString motARemplacer = config.recupRemplacerMot( labelXML ).getMotARemplacer();
-   return new depistage::gui::MetaRemplacer(
-      new depistage::gui::RemplacerDate( labelAffichage ),
-      labelAffichage,
-      motARemplacer );
-}
-
-depistage::gui::MetaRemplacer * creerRemplacerCombo( config::ConfigProgramme & config,
-                                                     const QString & labelAffichage,
-                                                     const std::vector< QString > & choix,
-                                                     const QString & labelXML )
-{
-   QString motARemplacer = config.recupRemplacerMot( labelXML ).getMotARemplacer();
-   return new depistage::gui::MetaRemplacer(
-      new depistage::gui::RemplacerCombo( labelAffichage, choix ),
-      labelAffichage,
-      motARemplacer );
-}
-
-depistage::gui::SelectionFichier * creerSelectionFichier( config::ConfigProgramme & config,
-   const QString & labelAffichage,
-   const QString & labelFenetre,
-   const QString & filtre,
-   const QString & labelXML )
-{
-   QString chemin = config.recupSelectionFichier( labelXML ).getChemin();
-   return new depistage::gui::SelectionFichier( labelAffichage, labelFenetre, filtre, chemin );
-}
 
 }
 
-ProgrammeEtiquettes::ProgrammeEtiquettes()
+ProgrammeEtiquettes::ProgrammeEtiquettes( config::ConfigProgrammes & configs )
+   : ProgrammeStandart( configs, titre )
 {
-   config::ConfigProgramme config = config::ConfigProgramme::chargerXML( chemin );
-
-   m_codePatient = creerRemplacerMot( this, config, tr( "Code patient" ), labelCodePatient );
+   m_codePatient = creerRemplacerMot( getConfig(), tr( "Code patient" ), labelCodePatient );
+   QObject::connect( m_codePatient->widgetBasic(), SIGNAL( texteModifie( const QString & ) ),
+                     this,                         SLOT( codePatientModifie( const QString & ) ) );
    m_elementsGUI.push_back( m_codePatient );
 
    m_nombreCodePatient = new gui::WidgetCompteur( tr( "Nombre de code patient : " ) );
@@ -96,11 +49,11 @@ ProgrammeEtiquettes::ProgrammeEtiquettes()
    std::vector< QString > choix;
    choix.push_back( "M" );
    choix.push_back( "F" );
-   m_sex = creerRemplacerCombo( config, tr( "Sexe" ), choix, labelSex );
+   m_sex = creerRemplacerCombo( getConfig(), tr( "Sexe" ), choix, labelSex );
    m_elementsGUI.push_back( m_sex );
 
    m_dateDeNaissance =
-      creerRemplacerDate( config, tr( "Date de naissance" ), labelDateDeNaissance );
+      creerRemplacerDate( getConfig(), tr( "Date de naissance" ), labelDateDeNaissance );
    m_dateDeNaissance->widgetBasic( )->setVisible( m_nombreCodePatient->getNombre() == 1 );
    m_elementsGUI.push_back( m_dateDeNaissance );
 
@@ -109,12 +62,17 @@ ProgrammeEtiquettes::ProgrammeEtiquettes()
    connect( boutonGeneration, SIGNAL( clique() ),
             this,             SLOT( lancerGeneration( ) ) );
 
-   m_fichierWord = creerSelectionFichier( config,
+   m_fichierWord = creerSelectionFichier( getConfig(),
                                           "Fichier word de rapport : ",
                                           "Ouvrir un document Word",
                                           "Word files  (*.doc *.docx)",
                                           labelWord );
    m_elementsGUI.push_back( m_fichierWord );
+}
+
+const QString & ProgrammeEtiquettes::getTitre() const
+{
+   return titre;
 }
 
 const std::vector< gui::ElementGUI * > & ProgrammeEtiquettes::getElementsGUI( ) const
@@ -235,7 +193,6 @@ void lancerGenerationWord( const QString & cheminWord,
 
 void ProgrammeEtiquettes::lancerGeneration()
 {
-
    if ( m_fichierWord->getChemin() != "" &&
         m_codePatient->motARemplacer( ) != "" &&
         m_sex->motARemplacer( ) != "" &&
@@ -250,18 +207,18 @@ void ProgrammeEtiquettes::lancerGeneration()
    }
 }
 
-void ProgrammeEtiquettes::sauverConfig( ) const
+void ProgrammeEtiquettes::sauverConfig()
 {
-   config::ConfigProgramme config( "etiquettes" );
-   config.miseAJourRemplacerConfig(
+   getConfig().setLabel( titre );
+   getConfig().miseAJourRemplacerConfig(
       config::RemplacerConfig( labelCodePatient, m_codePatient->motARemplacer( ) ) );
-   config.miseAJourRemplacerConfig(
+   getConfig().miseAJourRemplacerConfig(
       config::RemplacerConfig( labelSex, m_sex->motARemplacer( ) ) );
-   config.miseAJourRemplacerConfig(
+   getConfig().miseAJourRemplacerConfig(
       config::RemplacerConfig( labelDateDeNaissance, m_dateDeNaissance->motARemplacer( ) ) );
-   config.miseAJourSelectionFichierConfig(
+   getConfig().miseAJourSelectionFichierConfig(
       config::SelectionFichierConfig( labelWord, m_fichierWord->getChemin( ) ) );
-   config::ConfigProgramme::sauverXML( config, chemin );
+   getConfigs().sauver();
 }
 
 } }

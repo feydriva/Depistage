@@ -1,28 +1,29 @@
 
+#include <Chargement.hpp>
+
 #include <gui/FenetrePrincipale.hpp>
 
+#include <main/ProgrammeEnregistrement.hpp>
 #include <main/ProgrammeEtiquettes.hpp>
 
 #include <QApplication>
 
-
-//#include <office/Word.hpp>
-//#include <office/WordDocument.hpp>
+#include <vector>
 
 int main( int argc, char *argv[] )
 {
    QApplication app(argc, argv);
 
-   depistage::main::ProgrammeEtiquettes programmeEtiquettes;
+   depistage::config::ConfigProgrammes configs = depistage::main::chargerProgrammes();
 
-   depistage::gui::FenetrePrincipale fenetre( programmeEtiquettes );
+   depistage::main::ProgrammeEtiquettes programmeEtiquettes( configs );
+   depistage::main::ProgrammeEnregistrement programmeEnregistrement( configs );
+   std::vector< depistage::main::Programme * > programmes;
+   programmes.push_back( &programmeEtiquettes );
+   programmes.push_back( &programmeEnregistrement );
+
+   depistage::gui::FenetrePrincipale fenetre( programmes );
    fenetre.show();
-
-//   depistage::office::Word word;
-//   depistage::office::WordDocument document = word.open( "C:\\test.doc" );
-//   document.replace( "chat", "lion" );
-
-   //programmeEtiquettes.sauverConfig();
 
    return app.exec();
 }

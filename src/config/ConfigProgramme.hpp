@@ -15,9 +15,13 @@ namespace depistage { namespace config {
 class ConfigProgramme
 {
 public:
-   ConfigProgramme( const QString & label = QObject::tr( "invalide" ) );
+   ConfigProgramme();
+   ConfigProgramme( const QDomElement & racineProgramme );
+   void charger( const QDomElement & racineProgramme );
+   void sauver( QDomDocument & document, QDomElement & racineProgramme );
 
-   const QString & getLabel() const;
+   const QString & getLabel( ) const;
+   void setLabel( const QString & label );
 
    const RemplacerConfig & recupRemplacerMot( const QString & label );
    const SelectionFichierConfig & recupSelectionFichier( const QString & label );
@@ -25,15 +29,13 @@ public:
    void miseAJourRemplacerConfig( const RemplacerConfig & RemplacerConfig );
    void miseAJourSelectionFichierConfig( const SelectionFichierConfig & RemplacerConfig );
 
-   static ConfigProgramme chargerXML( const QString & chemin );
-   static void sauverXML( const ConfigProgramme & config, const QString & chemin );
-
 private:
    typedef QString Label;
-
    QString m_label;
    std::map< Label, RemplacerConfig > m_RemplacerConfigs;
    std::map< Label, SelectionFichierConfig > m_selectionFichierConfigs;
+
+
 };
 
 } }

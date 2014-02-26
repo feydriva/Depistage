@@ -6,14 +6,14 @@
 
 namespace depistage { namespace gui {
 
-RemplacerDate::RemplacerDate( const QString & labelStr, QWidget * parent )
+RemplacerDate::RemplacerDate( const QString & labelStr, const QDate & date, QWidget * parent)
    : Remplacer( parent )
 {
    QHBoxLayout * mainLayout = new QHBoxLayout();
 
    QLabel * labelMotRemplacer = new QLabel( labelStr + " : " );
    mainLayout->addWidget( labelMotRemplacer );
-   m_motParLequelRemplacer = new QDateEdit();
+   m_motParLequelRemplacer = new QDateEdit( date );
    m_motParLequelRemplacer->setDisplayFormat( "dd/MM/yyyy" );
    mainLayout->addWidget( m_motParLequelRemplacer );
    

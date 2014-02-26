@@ -4,15 +4,11 @@
 
 #include "ElementGUI.hpp"
 
-// Todo : a rendre generique
+#include <main/Programme.hpp>
 
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QWidget>
-
-namespace depistage { namespace main {
-class ProgrammeEtiquettes;
-} }
 
 namespace depistage { namespace gui {
 
@@ -20,22 +16,16 @@ class FenetrePrincipale : public QMainWindow
 {
    Q_OBJECT
 public :
-   FenetrePrincipale( const main::ProgrammeEtiquettes & programme, QWidget * parent = nullptr );
+   FenetrePrincipale( const std::vector< main::Programme * > & programmes,
+                      QWidget * parent = nullptr );
+   QWidget * creerWidgetProgramme( const main::Programme & programme );
 
-private :
-   //RemplacerMot * m_motRemplacerChat;
-   //RemplacerConfig * m_motRemplacerTest;
-   //SelectionFichier * m_wordTest;
-   //SelectionFichier * m_excelTest;
-
-   
-   QPushButton * m_configButton;   
-   QWidget * m_configWidget;
+private :   
+   std::vector< QPushButton * > m_configButtons;
+   std::vector< QWidget * > m_configWidgets;
 
 private slots:
-   //void remplacer();
-   //void ajouter();
-   void configOnOff();
+   void configOnOff( bool checked );
 };
 
 } }
