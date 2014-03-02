@@ -16,6 +16,7 @@ class ExcelDocument
 {
    public:
       ExcelDocument( QAxObject * workbook, QObject * parent = nullptr );
+      void save();
 
       ExcelOnglet recupererOnglet( unsigned int ongletId );
 

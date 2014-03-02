@@ -63,6 +63,7 @@ ProgrammeEtiquettes::ProgrammeEtiquettes( config::ConfigProgrammes & configs )
             this,             SLOT( lancerGeneration( ) ) );
 
    m_fichierWord = creerSelectionFichier( getConfig(),
+                                          true,
                                           "Fichier word de rapport : ",
                                           "Ouvrir un document Word",
                                           "Word files  (*.doc *.docx)",

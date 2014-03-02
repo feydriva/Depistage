@@ -50,14 +50,16 @@ depistage::gui::MetaRemplacer * creerRemplacerCombo( depistage::config::ConfigPr
       motARemplacer );
 }
 
-depistage::gui::SelectionFichier * creerSelectionFichier( depistage::config::ConfigProgramme & config,
+depistage::gui::SelectionFichier * creerSelectionFichier(
+   depistage::config::ConfigProgramme & config,
+   bool estFichier,
    const QString & labelAffichage,
    const QString & labelFenetre,
    const QString & filtre,
    const QString & labelXML )
 {
    QString chemin = config.recupSelectionFichier( labelXML ).getChemin();
-   return new depistage::gui::SelectionFichier( labelAffichage, labelFenetre, filtre, chemin );
+   return new depistage::gui::SelectionFichier( estFichier, labelAffichage, labelFenetre, filtre, chemin );
 }
 
 depistage::config::ConfigProgrammes chargerProgrammes( )

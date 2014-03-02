@@ -26,6 +26,12 @@ WordDocument::WordDocument( QAxObject * document, QObject * parent )
    connectException( m_parent, m_document.get() );
 }
 
+void WordDocument::saveAs( const std::string & chemin )
+{
+   m_document->dynamicCall( "SaveAs(const QString&)", chemin.c_str() );
+
+}
+
 namespace {
 
    QList< QVariant > retrieveDefaultParam()

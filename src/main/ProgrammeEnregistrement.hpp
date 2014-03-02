@@ -29,6 +29,7 @@ private:
    gui::MetaRemplacer * m_dateDuJour;
 
    gui::SelectionFichier * m_fichierWord;
+   gui::SelectionFichier * m_dossierWord;
    gui::SelectionFichier * m_fichierExcel;
 
 private slots:

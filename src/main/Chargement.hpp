@@ -32,6 +32,7 @@ depistage::gui::MetaRemplacer * creerRemplacerCombo( config::ConfigProgramme & c
                                                      const QString & labelXML );
 
 depistage::gui::SelectionFichier * creerSelectionFichier( config::ConfigProgramme & config,
+                                                          bool estFichier,
                                                           const QString & labelAffichage,
                                                           const QString & labelFenetre,
                                                           const QString & filtre,

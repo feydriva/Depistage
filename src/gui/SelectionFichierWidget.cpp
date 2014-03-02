@@ -8,13 +8,14 @@
 
 namespace depistage { namespace gui {
 
-SelectionFichierWidget::SelectionFichierWidget( const QString & labelStr,
+SelectionFichierWidget::SelectionFichierWidget( bool estFichier,
+                                                const QString & labelStr,
                                                 const QString & message,
                                                 const QString & filtre,
                                                 const QString & chemin,
                                                 QWidget * parent )
    : QWidget( parent ),
-     m_message( message ), m_filtre( filtre )
+     m_estFichier( estFichier ), m_message( message ), m_filtre( filtre )
 {
    QHBoxLayout * mainLayout = new QHBoxLayout();
 
@@ -40,8 +41,16 @@ QString SelectionFichierWidget::getChemin() const
 
 void SelectionFichierWidget::parcourir()
 {
-   const QString chemin = QFileDialog::getOpenFileName(this, m_message, getChemin(), m_filtre);
-   m_wordTest->setText(chemin);
+   if ( m_estFichier )
+   {
+      const QString chemin = QFileDialog::getOpenFileName( this, m_message, getChemin( ), m_filtre );
+      m_wordTest->setText( chemin );
+   }
+   else
+   {
+      const QString chemin = QFileDialog::getExistingDirectory( this, m_message, getChemin() );
+      m_wordTest->setText(chemin);
+   }
 }
 
 } }

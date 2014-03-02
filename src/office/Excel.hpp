@@ -15,7 +15,8 @@ class Excel
 {
    public:
       Excel( QObject * parent = nullptr );
-      ~Excel();
+
+      void quit();
 
       ExcelDocument open( const std::string & path );
 

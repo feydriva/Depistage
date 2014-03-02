@@ -29,9 +29,9 @@ Excel::Excel( QObject * parent )
 
 }
 
-Excel::~Excel()
+void Excel::quit()
 {
-   //m_excel->dynamicCall( "Quit(void)" );
+   m_excel->querySubObject( "Quit()" );
 }
 
 void Excel::initializeWorkbooks()

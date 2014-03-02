@@ -17,7 +17,8 @@ class SelectionFichier : public ElementGUI
 {
    Q_OBJECT
 public :
-   SelectionFichier( const QString & labelStr,
+   SelectionFichier( bool estFichier,
+                     const QString & labelStr,
                      const QString & message,
                      const QString & filtre,
                      const QString & chemin,

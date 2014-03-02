@@ -13,14 +13,16 @@ class SelectionFichierWidget : public QWidget
 {
    Q_OBJECT
 public:
-   SelectionFichierWidget(const QString & labelStr,
-                          const QString & message,
-                          const QString & filtre,
-                          const QString & chemin,
-                          QWidget * parent = nullptr);
+   SelectionFichierWidget( bool estFichier,
+                           const QString & labelStr,
+                           const QString & message,
+                           const QString & filtre,
+                           const QString & chemin,
+                           QWidget * parent = nullptr );
    QString getChemin() const;
 
 private:
+   bool m_estFichier;
    QString m_message;
    QString m_filtre;
 
