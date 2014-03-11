@@ -105,10 +105,12 @@ void lancerGenerationWord( const QString & cheminWord, const QString & cheminDos
    document.replace( sexAvant.toStdString(), sexApres.toStdString() );
    document.replace( dateNaissanceAvant.toStdString(), dateNaissanceApres.toStdString() );
    document.replace( dateDuJourAvant.toStdString(), dateDuJourApres.toStdString() );
-   std::string nouveauFichier = cheminDossier.toStdString();
-   nouveauFichier += "trod résultat négatif code " + codePatientApres.toStdString() + ".doc";
+   unsigned point = cheminWord.toStdString().find_last_of( "." );
+   const std::string extension = cheminWord.toStdString().substr( point );
+   std::string nouveauFichier =
+      cheminDossier.toStdString() + "/" +
+      "trod résultat négatif code " + codePatientApres.toStdString( ) + extension;
    document.saveAs( nouveauFichier );
-   word.quit( depistage::office::Word::ModeFermeture::SansSauvegarde );
 }
 
 void lancerGenerationExcel( const QString & cheminExcel,
