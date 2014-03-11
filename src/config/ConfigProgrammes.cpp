@@ -40,7 +40,7 @@ ConfigProgrammes::ConfigProgrammes( const QString & chemin )
    QDomElement programmes = depistage.firstChildElement( labelProgrammes );
    QDomElement programme = programmes.firstChildElement( labelProgramme );
    for ( ;
-         !programme.isNull( );
+         !programme.isNull();
          programme = programme.nextSiblingElement( labelProgramme ) )
    {
       ConfigProgramme config( programme );

@@ -26,8 +26,8 @@ public :
    virtual QWidget * widgetBasic() const override;
    virtual QWidget * widgetConfig() const override;
 
-   QString motParLequelRemplacer( ) const;
-   QString motARemplacer( ) const;
+   QString motParLequelRemplacer() const;
+   QString motARemplacer() const;
 
 private :
    Remplacer * m_remplacerBasic;

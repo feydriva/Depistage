@@ -43,7 +43,7 @@ void SelectionFichierWidget::parcourir()
 {
    if ( m_estFichier )
    {
-      const QString chemin = QFileDialog::getOpenFileName( this, m_message, getChemin( ), m_filtre );
+      const QString chemin = QFileDialog::getOpenFileName( this, m_message, getChemin(), m_filtre );
       m_wordTest->setText( chemin );
    }
    else

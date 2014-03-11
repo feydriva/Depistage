@@ -25,7 +25,7 @@ ExcelDocument::ExcelDocument( QAxObject * workbook, QObject * parent )
    connectException( m_parent, m_workbook.get() );
 }
 
-void ExcelDocument::save( )
+void ExcelDocument::save()
 {
    m_workbook->querySubObject( "Save()" );
 }

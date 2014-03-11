@@ -13,7 +13,7 @@ class Programme : public QObject
 {
    Q_OBJECT
 public:
-   virtual const QString & getTitre( ) const = 0;
+   virtual const QString & getTitre() const = 0;
    virtual const std::vector< gui::ElementGUI * > & getElementsGUI() const = 0;
 };
 

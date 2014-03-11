@@ -20,7 +20,7 @@ RemplacerDate::RemplacerDate( const QString & labelStr, const QDate & date, QWid
    setLayout( mainLayout );
 }
 
-QString RemplacerDate::motParLequelRemplacer( ) const
+QString RemplacerDate::motParLequelRemplacer() const
 {
    return m_motParLequelRemplacer->text();
 }

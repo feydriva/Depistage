@@ -25,12 +25,12 @@ QWidget * MetaRemplacer::widgetConfig() const
    return m_remplacerConfig;
 }
 
-QString MetaRemplacer::motParLequelRemplacer( ) const
+QString MetaRemplacer::motParLequelRemplacer() const
 {
    return m_remplacerBasic->motParLequelRemplacer();
 }
 
-QString MetaRemplacer::motARemplacer( ) const
+QString MetaRemplacer::motARemplacer() const
 {
    return m_remplacerConfig->motARemplacer();
 }

@@ -54,13 +54,13 @@ ProgrammeEtiquettes::ProgrammeEtiquettes( config::ConfigProgrammes & configs )
 
    m_dateDeNaissance =
       creerRemplacerDate( getConfig(), tr( "Date de naissance" ), labelDateDeNaissance );
-   m_dateDeNaissance->widgetBasic( )->setVisible( m_nombreCodePatient->getNombre() == 1 );
+   m_dateDeNaissance->widgetBasic()->setVisible( m_nombreCodePatient->getNombre() == 1 );
    m_elementsGUI.push_back( m_dateDeNaissance );
 
    gui::BoutonAction * boutonGeneration = new depistage::gui::BoutonAction( "Lancer génération" );
    m_elementsGUI.push_back( boutonGeneration );
    connect( boutonGeneration, SIGNAL( clique() ),
-            this,             SLOT( lancerGeneration( ) ) );
+            this,             SLOT( lancerGeneration() ) );
 
    m_fichierWord = creerSelectionFichier( getConfig(),
                                           true,
@@ -76,7 +76,7 @@ const QString & ProgrammeEtiquettes::getTitre() const
    return titre;
 }
 
-const std::vector< gui::ElementGUI * > & ProgrammeEtiquettes::getElementsGUI( ) const
+const std::vector< gui::ElementGUI * > & ProgrammeEtiquettes::getElementsGUI() const
 {
    return m_elementsGUI;
 }
@@ -195,9 +195,9 @@ void lancerGenerationWord( const QString & cheminWord,
 void ProgrammeEtiquettes::lancerGeneration()
 {
    if ( m_fichierWord->getChemin() != "" &&
-        m_codePatient->motARemplacer( ) != "" &&
-        m_sex->motARemplacer( ) != "" &&
-        ( m_nombreCodePatient->getNombre() > 1 ||  m_dateDeNaissance->motARemplacer( ) != "" ) )
+        m_codePatient->motARemplacer() != "" &&
+        m_sex->motARemplacer() != "" &&
+        ( m_nombreCodePatient->getNombre() > 1 ||  m_dateDeNaissance->motARemplacer() != "" ) )
    {
       lancerGenerationWord(
          m_fichierWord->getChemin(),
@@ -212,13 +212,13 @@ void ProgrammeEtiquettes::sauverConfig()
 {
    getConfig().setLabel( titre );
    getConfig().miseAJourRemplacerConfig(
-      config::RemplacerConfig( labelCodePatient, m_codePatient->motARemplacer( ) ) );
+      config::RemplacerConfig( labelCodePatient, m_codePatient->motARemplacer() ) );
    getConfig().miseAJourRemplacerConfig(
-      config::RemplacerConfig( labelSex, m_sex->motARemplacer( ) ) );
+      config::RemplacerConfig( labelSex, m_sex->motARemplacer() ) );
    getConfig().miseAJourRemplacerConfig(
-      config::RemplacerConfig( labelDateDeNaissance, m_dateDeNaissance->motARemplacer( ) ) );
+      config::RemplacerConfig( labelDateDeNaissance, m_dateDeNaissance->motARemplacer() ) );
    getConfig().miseAJourSelectionFichierConfig(
-      config::SelectionFichierConfig( labelWord, m_fichierWord->getChemin( ) ) );
+      config::SelectionFichierConfig( labelWord, m_fichierWord->getChemin() ) );
    getConfigs().sauver();
 }
 

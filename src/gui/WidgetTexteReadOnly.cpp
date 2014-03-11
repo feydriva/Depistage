@@ -12,7 +12,7 @@ WidgetTexteReadOnly::WidgetTexteReadOnly( const QString & labelStr,
                                          QWidget * parent )
    : QWidget( parent )
 {
-   QHBoxLayout * mainLayout = new QHBoxLayout( );
+   QHBoxLayout * mainLayout = new QHBoxLayout();
 
    QLabel * label = new QLabel( labelStr );
    mainLayout->addWidget( label );
@@ -30,7 +30,7 @@ void WidgetTexteReadOnly::setTexte( const QString & texte )
    m_texte->setText( texte );
 }
 
-QString WidgetTexteReadOnly::getTexte( ) const
+QString WidgetTexteReadOnly::getTexte() const
 {
    return m_texte->text();
 }

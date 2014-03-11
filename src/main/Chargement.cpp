@@ -62,7 +62,7 @@ depistage::gui::SelectionFichier * creerSelectionFichier(
    return new depistage::gui::SelectionFichier( estFichier, labelAffichage, labelFenetre, filtre, chemin );
 }
 
-depistage::config::ConfigProgrammes chargerProgrammes( )
+depistage::config::ConfigProgrammes chargerProgrammes()
 {
    return depistage::config::ConfigProgrammes( cheminConfig );
 }

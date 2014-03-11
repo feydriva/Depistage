@@ -36,7 +36,7 @@ ProgrammeEnregistrement::ProgrammeEnregistrement( depistage::config::ConfigProgr
    std::vector< QString > choix;
    choix.push_back( "M" );
    choix.push_back( "F" );
-   m_sex = creerRemplacerCombo( getConfig( ), tr( "Sexe" ), choix, labelSex );
+   m_sex = creerRemplacerCombo( getConfig(), tr( "Sexe" ), choix, labelSex );
    m_elementsGUI.push_back( m_sex );
 
    m_dateDeNaissance =
@@ -54,7 +54,7 @@ ProgrammeEnregistrement::ProgrammeEnregistrement( depistage::config::ConfigProgr
    gui::BoutonAction * boutonGeneration = new depistage::gui::BoutonAction( "Lancer génération" );
    m_elementsGUI.push_back( boutonGeneration );
    connect( boutonGeneration, SIGNAL( clique() ),
-            this,             SLOT( lancerGeneration( ) ) );
+            this,             SLOT( lancerGeneration() ) );
 
    m_fichierWord = creerSelectionFichier( getConfig(),
                                           true,
@@ -101,10 +101,10 @@ void lancerGenerationWord( const QString & cheminWord, const QString & cheminDos
 {
    depistage::office::Word word;
    depistage::office::WordDocument document = word.open( cheminWord.toStdString() );
-   document.replace( codePatientAvant.toStdString( ), codePatientApres.toStdString( ) );
+   document.replace( codePatientAvant.toStdString(), codePatientApres.toStdString() );
    document.replace( sexAvant.toStdString(), sexApres.toStdString() );
-   document.replace( dateNaissanceAvant.toStdString( ), dateNaissanceApres.toStdString( ) );
-   document.replace( dateDuJourAvant.toStdString( ), dateDuJourApres.toStdString( ) );
+   document.replace( dateNaissanceAvant.toStdString(), dateNaissanceApres.toStdString() );
+   document.replace( dateDuJourAvant.toStdString(), dateDuJourApres.toStdString() );
    std::string nouveauFichier = cheminDossier.toStdString();
    nouveauFichier += "trod résultat négatif code " + codePatientApres.toStdString() + ".doc";
    document.saveAs( nouveauFichier );
@@ -118,13 +118,13 @@ void lancerGenerationExcel( const QString & cheminExcel,
                             const QString & dateDuJour )
 {
     office::Excel excel;
-    office::ExcelDocument document = excel.open( cheminExcel.toStdString( ) );
+    office::ExcelDocument document = excel.open( cheminExcel.toStdString() );
     office::ExcelOnglet onglet = document.recupererOnglet( 1 );
     std::vector< std::string > informations;
     informations.push_back( codePatient.toStdString() );
-    informations.push_back( sex.toStdString( ) );
-    informations.push_back( dateNaissance.toStdString( ) );
-    informations.push_back( dateDuJour.toStdString( ) );
+    informations.push_back( sex.toStdString() );
+    informations.push_back( dateNaissance.toStdString() );
+    informations.push_back( dateDuJour.toStdString() );
     onglet.ajouterLigne( informations );
     document.save();
     excel.quit();
@@ -132,47 +132,47 @@ void lancerGenerationExcel( const QString & cheminExcel,
 
 }
 
-void ProgrammeEnregistrement::lancerGeneration( )
+void ProgrammeEnregistrement::lancerGeneration()
 {
    if ( m_fichierWord->getChemin() != "" &&
-        m_dossierWord->getChemin( ) != "" &&
-        m_fichierExcel->getChemin( ) != "" &&
-        m_codePatient->motARemplacer( ) != "" &&
-        m_sex->motARemplacer( ) != "" &&
-        m_dateDeNaissance->motARemplacer( ) != "" )
+        m_dossierWord->getChemin() != "" &&
+        m_fichierExcel->getChemin() != "" &&
+        m_codePatient->motARemplacer() != "" &&
+        m_sex->motARemplacer() != "" &&
+        m_dateDeNaissance->motARemplacer() != "" )
    {
       lancerGenerationWord(
-         m_fichierWord->getChemin( ), m_dossierWord->getChemin(),
+         m_fichierWord->getChemin(), m_dossierWord->getChemin(),
          m_codePatient->motARemplacer(), m_codePatient->motParLequelRemplacer(),
          m_sex->motARemplacer(), m_sex->motParLequelRemplacer(),
-         m_dateDeNaissance->motARemplacer( ), m_dateDeNaissance->motParLequelRemplacer( ),
-         m_dateDuJour->motARemplacer( ), m_dateDuJour->motParLequelRemplacer( ) );
+         m_dateDeNaissance->motARemplacer(), m_dateDeNaissance->motParLequelRemplacer(),
+         m_dateDuJour->motARemplacer(), m_dateDuJour->motParLequelRemplacer() );
       lancerGenerationExcel(
          m_fichierExcel->getChemin(),
-         m_codePatient->motParLequelRemplacer( ),
-         m_sex->motParLequelRemplacer( ),
-         m_dateDeNaissance->motParLequelRemplacer( ),
-         m_dateDuJour->motParLequelRemplacer( ) );
+         m_codePatient->motParLequelRemplacer(),
+         m_sex->motParLequelRemplacer(),
+         m_dateDeNaissance->motParLequelRemplacer(),
+         m_dateDuJour->motParLequelRemplacer() );
    }
 }
 
-void ProgrammeEnregistrement::sauverConfig( )
+void ProgrammeEnregistrement::sauverConfig()
 {
    getConfig().setLabel( titre );
    getConfig().miseAJourRemplacerConfig(
-      config::RemplacerConfig( labelCodePatient, m_codePatient->motARemplacer( ) ) );
+      config::RemplacerConfig( labelCodePatient, m_codePatient->motARemplacer() ) );
    getConfig().miseAJourRemplacerConfig(
-      config::RemplacerConfig( labelSex, m_sex->motARemplacer( ) ) );
+      config::RemplacerConfig( labelSex, m_sex->motARemplacer() ) );
    getConfig().miseAJourRemplacerConfig(
-      config::RemplacerConfig( labelDateDeNaissance, m_dateDeNaissance->motARemplacer( ) ) );
-   getConfig( ).miseAJourRemplacerConfig(
-      config::RemplacerConfig( labelDateDuJour, m_dateDuJour->motARemplacer( ) ) );
+      config::RemplacerConfig( labelDateDeNaissance, m_dateDeNaissance->motARemplacer() ) );
+   getConfig().miseAJourRemplacerConfig(
+      config::RemplacerConfig( labelDateDuJour, m_dateDuJour->motARemplacer() ) );
    getConfig().miseAJourSelectionFichierConfig(
-      config::SelectionFichierConfig( labelWord, m_fichierWord->getChemin( ) ) );
+      config::SelectionFichierConfig( labelWord, m_fichierWord->getChemin() ) );
    getConfig().miseAJourSelectionFichierConfig(
-      config::SelectionFichierConfig( labelDossier, m_dossierWord->getChemin( ) ) );
+      config::SelectionFichierConfig( labelDossier, m_dossierWord->getChemin() ) );
    getConfig().miseAJourSelectionFichierConfig(
-      config::SelectionFichierConfig( labelExcel, m_fichierExcel->getChemin( ) ) );
+      config::SelectionFichierConfig( labelExcel, m_fichierExcel->getChemin() ) );
    getConfigs().sauver();
 }
 

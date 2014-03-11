@@ -14,7 +14,7 @@ SelectionFichierConfig::SelectionFichierConfig( const QString & label, const QSt
    : m_label( label ), m_chemin( chemin )
 {}
 
-const QString & SelectionFichierConfig::getLabel( ) const
+const QString & SelectionFichierConfig::getLabel() const
 {
    return m_label;
 }
@@ -26,8 +26,8 @@ const QString & SelectionFichierConfig::getChemin() const
 
 SelectionFichierConfig SelectionFichierConfig::chargerXML( const QDomElement & noeudSelectionFichier )
 {
-   QString label = noeudSelectionFichier.firstChildElement( labelLabel ).text( );
-   QString chemin = noeudSelectionFichier.firstChildElement( labelChemin ).text( );
+   QString label = noeudSelectionFichier.firstChildElement( labelLabel ).text();
+   QString chemin = noeudSelectionFichier.firstChildElement( labelChemin ).text();
    return SelectionFichierConfig( label, chemin );
 }
 
@@ -35,11 +35,11 @@ void SelectionFichierConfig::sauverXML( const SelectionFichierConfig & config,
                                         QDomElement & noeudSelectionFichier )
 {
    QDomElement label = noeudSelectionFichier.ownerDocument().createElement( labelLabel );
-   label.appendChild( noeudSelectionFichier.ownerDocument().createTextNode( config.getLabel( ) ) );
+   label.appendChild( noeudSelectionFichier.ownerDocument().createTextNode( config.getLabel() ) );
    noeudSelectionFichier.appendChild( label );
 
-   QDomElement chemin = noeudSelectionFichier.ownerDocument( ).createElement( labelChemin );
-   chemin.appendChild( noeudSelectionFichier.ownerDocument( ).createTextNode( config.getChemin( ) ) );
+   QDomElement chemin = noeudSelectionFichier.ownerDocument().createElement( labelChemin );
+   chemin.appendChild( noeudSelectionFichier.ownerDocument().createTextNode( config.getChemin() ) );
    noeudSelectionFichier.appendChild( chemin );
 }
 

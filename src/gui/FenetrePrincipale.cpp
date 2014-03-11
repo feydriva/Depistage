@@ -32,13 +32,13 @@ QWidget * FenetrePrincipale::creerWidgetProgramme( const main::Programme & progr
    int row = 0;
    for ( depistage::gui::ElementGUI * elementGui : widgets )
    {
-      if ( elementGui->widgetBasic( ) != nullptr )
+      if ( elementGui->widgetBasic() != nullptr )
       {
-         basicLayout->addWidget( elementGui->widgetBasic( ) );
+         basicLayout->addWidget( elementGui->widgetBasic() );
       }
-      if ( elementGui->widgetConfig( ) != nullptr )
+      if ( elementGui->widgetConfig() != nullptr )
       {
-         configLayout->addWidget( elementGui->widgetConfig( ) );
+         configLayout->addWidget( elementGui->widgetConfig() );
       }
    }
 
@@ -57,7 +57,7 @@ QWidget * FenetrePrincipale::creerWidgetProgramme( const main::Programme & progr
             this,           SLOT( configOnOff( bool ) ) );
    m_configButtons.push_back( boutonConfig );
 
-   QWidget * widgetConfig = new QWidget( );
+   QWidget * widgetConfig = new QWidget();
    widgetConfig->setLayout( configLayout );
    widgetConfig->hide();
    mainLayout->addWidget( widgetConfig, row++, 0 );

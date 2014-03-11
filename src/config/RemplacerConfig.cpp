@@ -14,7 +14,7 @@ RemplacerConfig::RemplacerConfig( const QString & label, const QString & motARem
    : m_label( label ), m_motARemplacer( motARemplacer )
 {}
 
-const QString & RemplacerConfig::getLabel( ) const
+const QString & RemplacerConfig::getLabel() const
 {
    return m_label;
 }
@@ -35,13 +35,13 @@ void RemplacerConfig::sauverXML( const RemplacerConfig & config,
                                     QDomElement & noeudRemplacerMot )
 {
    QDomElement label = noeudRemplacerMot.ownerDocument().createElement( labelLabel );
-   label.appendChild( noeudRemplacerMot.ownerDocument().createTextNode( config.getLabel( ) ) );
+   label.appendChild( noeudRemplacerMot.ownerDocument().createTextNode( config.getLabel() ) );
    noeudRemplacerMot.appendChild( label );
 
    QDomElement motARemplacer =
-      noeudRemplacerMot.ownerDocument( ).createElement( labelMotARemplacer );
+      noeudRemplacerMot.ownerDocument().createElement( labelMotARemplacer );
    motARemplacer.appendChild(
-      noeudRemplacerMot.ownerDocument( ).createTextNode( config.getMotARemplacer( ) ) );
+      noeudRemplacerMot.ownerDocument().createTextNode( config.getMotARemplacer() ) );
    noeudRemplacerMot.appendChild( motARemplacer );
 }
 

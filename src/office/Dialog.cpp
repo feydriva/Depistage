@@ -22,10 +22,10 @@ void connectException( const QObject * parent, const QAxObject * axObject )
 Dialog::Dialog( QAxObject * dialog, QObject * parent )
 : m_dialog( dialog ), m_parent( parent )
 {
-   connectException( m_parent, m_dialog.get( ) );
+   connectException( m_parent, m_dialog.get() );
 }
 
-void Dialog::show( )
+void Dialog::show()
 {
    m_dialog->dynamicCall( "Show()" );
 }

@@ -20,7 +20,7 @@ public:
    void charger( const QDomElement & racineProgramme );
    void sauver( QDomDocument & document, QDomElement & racineProgramme );
 
-   const QString & getLabel( ) const;
+   const QString & getLabel() const;
    void setLabel( const QString & label );
 
    const RemplacerConfig & recupRemplacerMot( const QString & label );

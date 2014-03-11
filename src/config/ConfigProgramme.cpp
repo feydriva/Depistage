@@ -33,19 +33,19 @@ ConfigProgramme::ConfigProgramme( const QDomElement & racineProgramme )
 
 void ConfigProgramme::charger( const QDomElement & racineProgramme )
 {
-   m_label = racineProgramme.firstChildElement( labelLabel ).text( );
+   m_label = racineProgramme.firstChildElement( labelLabel ).text();
 
    QDomElement parametres = racineProgramme.firstChildElement( labelParametres );
    QDomElement noeudRemplacerMot = parametres.firstChildElement( labelRemplacerMot );
    for ( ;
-         !noeudRemplacerMot.isNull( );
+         !noeudRemplacerMot.isNull();
          noeudRemplacerMot = noeudRemplacerMot.nextSiblingElement( labelRemplacerMot ) )
    {
       miseAJourRemplacerConfig( RemplacerConfig::chargerXML( noeudRemplacerMot ) );
    }
    QDomElement noeudSelectionFichier = parametres.firstChildElement( labelSelectionFichier );
    for ( ;
-         !noeudSelectionFichier.isNull( );
+         !noeudSelectionFichier.isNull();
          noeudSelectionFichier = noeudSelectionFichier.nextSiblingElement( labelSelectionFichier ) )
    {
       miseAJourSelectionFichierConfig(
@@ -102,7 +102,7 @@ void ConfigProgramme::miseAJourRemplacerConfig( const RemplacerConfig & remplace
 void ConfigProgramme::miseAJourSelectionFichierConfig(
    const SelectionFichierConfig & selectionFichierConfig )
 {
-   m_selectionFichierConfigs[ selectionFichierConfig.getLabel( ) ] = selectionFichierConfig;
+   m_selectionFichierConfigs[ selectionFichierConfig.getLabel() ] = selectionFichierConfig;
 }
 
 } }
