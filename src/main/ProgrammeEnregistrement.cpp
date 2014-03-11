@@ -16,7 +16,7 @@ namespace depistage { namespace main {
 
 namespace {
 
-const QString titre = "Enregistrement";
+const QString titre = "TROD";
 const QString labelCodePatient = "codePatient";
 const QString labelSex = "sex";
 const QString labelDateDeNaissance = "dateDeNaissance";
