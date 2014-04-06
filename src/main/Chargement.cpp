@@ -18,11 +18,12 @@ const QString cheminConfig = "config.xml";
 
 depistage::gui::MetaRemplacer * creerRemplacerMot( depistage::config::ConfigProgramme & config,
                                                    const QString & labelAffichage,
-                                                   const QString & labelXML )
+                                                   const QString & labelXML,
+                                                   const QString & valeurParDefaut )
 {
    QString motARemplacer = config.recupRemplacerMot( labelXML ).getMotARemplacer();
    depistage::gui::RemplacerMot * remplacerMot =
-      new depistage::gui::RemplacerMot( labelAffichage );
+      new depistage::gui::RemplacerMot( labelAffichage, valeurParDefaut );
    return new depistage::gui::MetaRemplacer( remplacerMot, labelAffichage, motARemplacer );
 }
 

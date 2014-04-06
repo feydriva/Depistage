@@ -15,7 +15,9 @@ class RemplacerMot : public Remplacer
 {
    Q_OBJECT
 public :
-   RemplacerMot( const QString & labelStr, QWidget * parent = nullptr );
+   RemplacerMot( const QString & labelStr,
+                 const QString & valeurParDefaut,
+                 QWidget * parent = nullptr );
    virtual QString motParLequelRemplacer() const override;
 
 private :

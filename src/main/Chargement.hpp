@@ -19,7 +19,8 @@ depistage::config::ConfigProgrammes chargerProgrammes();
 
 depistage::gui::MetaRemplacer * creerRemplacerMot( config::ConfigProgramme & config,
                                                    const QString & labelAffichage,
-                                                   const QString & labelXML );
+                                                   const QString & labelXML,
+                                                   const QString & valeurParDefaut = "" );
 
 depistage::gui::MetaRemplacer * creerRemplacerDate( config::ConfigProgramme & config,
                                                     const QString & labelAffichage,
