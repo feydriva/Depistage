@@ -19,8 +19,8 @@ int main( int argc, char *argv[] )
    depistage::main::ProgrammeEtiquettes programmeEtiquettes( configs );
    depistage::main::ProgrammeEnregistrement programmeEnregistrement( configs );
    std::vector< depistage::main::Programme * > programmes;
-   programmes.push_back( &programmeEtiquettes );
    programmes.push_back( &programmeEnregistrement );
+   programmes.push_back( &programmeEtiquettes );
 
    depistage::gui::FenetrePrincipale fenetre( programmes );
    fenetre.show();
