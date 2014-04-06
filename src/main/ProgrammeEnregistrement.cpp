@@ -21,6 +21,8 @@ const QString labelCodePatient = "codePatient";
 const QString labelSex = "sex";
 const QString labelDateDeNaissance = "dateDeNaissance";
 const QString labelDateDuJour = "dateDuJour";
+const QString labelRealisePar = "realisePar";
+const QString labelRenduPar = "renduPar";
 const QString labelWord = "word";
 const QString labelDossier = "dossier";
 const QString labelExcel = "excel";
@@ -50,6 +52,13 @@ ProgrammeEnregistrement::ProgrammeEnregistrement( depistage::config::ConfigProgr
                           QDate::currentDate() );
    m_dateDuJour->widgetBasic()->setEnabled( false );
    m_elementsGUI.push_back( m_dateDuJour );
+
+   m_realisePar = creerRemplacerMot( getConfig( ), tr( "Réalisé par" ), labelRealisePar );
+   m_elementsGUI.push_back( m_realisePar );
+
+   m_renduPar = creerRemplacerMot( getConfig( ), tr( "Rendu par" ), labelRenduPar );
+   m_elementsGUI.push_back( m_renduPar );
+
 
    gui::BoutonAction * boutonGeneration = new depistage::gui::BoutonAction( "Lancer génération" );
    m_elementsGUI.push_back( boutonGeneration );

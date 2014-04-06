@@ -27,6 +27,8 @@ private:
    gui::MetaRemplacer * m_sex;
    gui::MetaRemplacer * m_dateDeNaissance;
    gui::MetaRemplacer * m_dateDuJour;
+   gui::MetaRemplacer * m_realisePar;
+   gui::MetaRemplacer * m_renduPar;
 
    gui::SelectionFichier * m_fichierWord;
    gui::SelectionFichier * m_dossierWord;
