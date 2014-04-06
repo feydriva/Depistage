@@ -2,6 +2,7 @@
 #include "WordDocument.hpp"
 
 #include <iostream>
+#include <thread>
 #include <sstream>
 
 namespace depistage { namespace office {
@@ -82,7 +83,13 @@ void WordDocument::replace( const std::string & textToFind, const std::string & 
 
 void WordDocument::imprimer() const
 {
-   m_document->querySubObject( "PrintOut()" );
+   //m_document->querySubObject( "PrintOut()" );
+   m_document->dynamicCall( "PrintOut()" );
+   std::this_thread::sleep_for( std::chrono::seconds( 3 ) );
+   //m_document->dynamicCall( "PrintOut()" );
+   //m_document->dynamicCall( "PrintOut(boolean)", false );
+   //m_document->dynamicCall( "PrintOut(boolean)", false );
+   //m_document->dynamicCall( "PrintOut(boolean)", false );
 }
 
 bool WordDocument::isOpen() const

@@ -109,7 +109,7 @@ void lancerGenerationWord( const QString & cheminWord, const QString & cheminDos
    const std::string extension = cheminWord.toStdString().substr( point );
    std::string nouveauFichier =
       cheminDossier.toStdString() + "/" +
-      "trod résultat négatif code " + codePatientApres.toStdString( ) + extension;
+      "trod_resultat_negatif_code_" + codePatientApres.toStdString( ) + extension;
    document.saveAs( nouveauFichier );
 }
 
