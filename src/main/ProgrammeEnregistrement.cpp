@@ -56,7 +56,7 @@ ProgrammeEnregistrement::ProgrammeEnregistrement( depistage::config::ConfigProgr
    m_realisePar = creerRemplacerMot( getConfig( ), tr( "Réalisé par" ), labelRealisePar );
    m_elementsGUI.push_back( m_realisePar );
 
-   m_renduPar = creerRemplacerMot( getConfig( ), tr( "Rendu par" ), labelRenduPar );
+   m_renduPar = creerRemplacerMot( getConfig( ), tr( "Rendu par" ), labelRenduPar, "Docteur " );
    m_elementsGUI.push_back( m_renduPar );
 
 
