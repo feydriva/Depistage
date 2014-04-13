@@ -124,6 +124,8 @@ void lancerGenerationWord( const QString & cheminWord, const QString & cheminDos
       cheminDossier.toStdString() + "/" +
       "trod_resultat_negatif_code_" + codePatientApres.toStdString( ) + extension;
    document.saveAs( nouveauFichier );
+   document.imprimer();
+   word.quit( depistage::office::Word::ModeFermeture::SansSauvegarde );
 }
 
 void lancerGenerationExcel( const QString & cheminExcel,
