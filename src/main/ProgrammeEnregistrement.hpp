@@ -29,6 +29,7 @@ private:
    gui::MetaRemplacer * m_dateDuJour;
    gui::MetaRemplacer * m_realisePar;
    gui::MetaRemplacer * m_renduPar;
+   gui::MetaRemplacer * m_numeroDeLot;
 
    gui::SelectionFichier * m_fichierWord;
    gui::SelectionFichier * m_dossierWord;

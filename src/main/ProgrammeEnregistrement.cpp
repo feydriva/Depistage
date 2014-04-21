@@ -23,6 +23,7 @@ const QString labelDateDeNaissance = "dateDeNaissance";
 const QString labelDateDuJour = "dateDuJour";
 const QString labelRealisePar = "realisePar";
 const QString labelRenduPar = "renduPar";
+const QString labelNumeroDeLot = "numeroDeLot";
 const QString labelWord = "word";
 const QString labelDossier = "dossier";
 const QString labelExcel = "excel";
@@ -58,6 +59,9 @@ ProgrammeEnregistrement::ProgrammeEnregistrement( depistage::config::ConfigProgr
 
    m_renduPar = creerRemplacerMot( getConfig( ), tr( "Rendu par" ), labelRenduPar, "Docteur " );
    m_elementsGUI.push_back( m_renduPar );
+
+   m_numeroDeLot = creerRemplacerMot( getConfig( ), tr( "Numéro de lot" ), labelNumeroDeLot );
+   m_elementsGUI.push_back( m_numeroDeLot );
 
 
    gui::BoutonAction * boutonGeneration = new depistage::gui::BoutonAction( "Lancer génération" );
@@ -108,7 +112,8 @@ void lancerGenerationWord( const QString & cheminWord, const QString & cheminDos
                            const QString & dateNaissanceAvant, const QString & dateNaissanceApres,
                            const QString & dateDuJourAvant, const QString & dateDuJourApres,
                            const QString & realiseParAvant, const QString & realiseParApres,
-                           const QString & renduParAvant, const QString & renduParApres )
+                           const QString & renduParAvant, const QString & renduParApres,
+                           const QString & numeroDeLotAvant, const QString & numeroDeLotApres )
 {
    depistage::office::Word word;
    depistage::office::WordDocument document = word.open( cheminWord.toStdString() );
@@ -118,6 +123,10 @@ void lancerGenerationWord( const QString & cheminWord, const QString & cheminDos
    document.replace( dateDuJourAvant.toStdString(), dateDuJourApres.toStdString() );
    document.replace( realiseParAvant.toStdString(), realiseParApres.toStdString() );
    document.replace( renduParAvant.toStdString(), renduParApres.toStdString() );
+   if ( numeroDeLotAvant != "" )
+   {
+      document.replace( numeroDeLotAvant.toStdString( ), numeroDeLotApres.toStdString( ) );
+   }
    unsigned point = cheminWord.toStdString().find_last_of( "." );
    const std::string extension = cheminWord.toStdString().substr( point );
    std::string nouveauFichier =
@@ -166,8 +175,9 @@ void ProgrammeEnregistrement::lancerGeneration()
          m_sex->motARemplacer(), m_sex->motParLequelRemplacer(),
          m_dateDeNaissance->motARemplacer(), m_dateDeNaissance->motParLequelRemplacer(),
          m_dateDuJour->motARemplacer(), m_dateDuJour->motParLequelRemplacer(),
-         m_realisePar->motARemplacer( ), m_realisePar->motParLequelRemplacer( ),
-         m_renduPar->motARemplacer( ), m_renduPar->motParLequelRemplacer( ) );
+         m_realisePar->motARemplacer(), m_realisePar->motParLequelRemplacer(),
+         m_renduPar->motARemplacer(), m_renduPar->motParLequelRemplacer(),
+         m_numeroDeLot->motARemplacer( ), m_numeroDeLot->motParLequelRemplacer( ) );
       lancerGenerationExcel(
          m_fichierExcel->getChemin(),
          m_codePatient->motParLequelRemplacer(),
@@ -192,6 +202,8 @@ void ProgrammeEnregistrement::sauverConfig()
       config::RemplacerConfig( labelRealisePar, m_realisePar->motARemplacer() ) );
    getConfig().miseAJourRemplacerConfig(
       config::RemplacerConfig( labelRenduPar, m_renduPar->motARemplacer() ) );
+   getConfig().miseAJourRemplacerConfig(
+      config::RemplacerConfig( labelNumeroDeLot, m_numeroDeLot->motARemplacer() ) );
    getConfig().miseAJourSelectionFichierConfig(
       config::SelectionFichierConfig( labelWord, m_fichierWord->getChemin() ) );
    getConfig().miseAJourSelectionFichierConfig(
