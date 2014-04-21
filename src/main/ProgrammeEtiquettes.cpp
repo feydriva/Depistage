@@ -26,7 +26,8 @@ const QString titre = "Etiquettes";
 const QString labelCodePatient = "codePatient";
 const QString labelSex = "sex";
 const QString labelDateDeNaissance = "dateDeNaissance";
-const QString labelWord = "word";
+const QString labelWordUneEtiquette = "wordUneEtiquette";
+const QString labelWordPlusieursEtiquettes = "wordPlusieursEtiquettes";
 
 }
 
@@ -62,13 +63,21 @@ ProgrammeEtiquettes::ProgrammeEtiquettes( config::ConfigProgrammes & configs )
    connect( boutonGeneration, SIGNAL( clique() ),
             this,             SLOT( lancerGeneration() ) );
 
-   m_fichierWord = creerSelectionFichier( getConfig(),
-                                          true,
-                                          "Fichier word de rapport : ",
-                                          "Ouvrir un document Word",
-                                          "Word files  (*.doc *.docx)",
-                                          labelWord );
-   m_elementsGUI.push_back( m_fichierWord );
+   m_fichierWordUneEtiquette = creerSelectionFichier( getConfig( ),
+                                                      true,
+                                                      "Fichier word une etiquette : ",
+                                                      "Ouvrir un document Word",
+                                                      "Word files  (*.doc *.docx)",
+                                                      labelWordUneEtiquette );
+   m_elementsGUI.push_back( m_fichierWordUneEtiquette );
+
+   m_fichierWordPlusieursEtiquettes = creerSelectionFichier( getConfig( ),
+                                                             true,
+                                                             "Fichier word plusieurs etiquettes : ",
+                                                             "Ouvrir un document Word",
+                                                             "Word files  (*.doc *.docx)",
+                                                             labelWordPlusieursEtiquettes );
+   m_elementsGUI.push_back( m_fichierWordPlusieursEtiquettes );
 }
 
 const QString & ProgrammeEtiquettes::getTitre() const
@@ -194,13 +203,16 @@ void lancerGenerationWord( const QString & cheminWord,
 
 void ProgrammeEtiquettes::lancerGeneration()
 {
-   if ( m_fichierWord->getChemin() != "" &&
+   gui::SelectionFichier * m_fichierWordToUse =
+      m_nombreCodePatient->getNombre( ) == 1 ? m_fichierWordUneEtiquette :
+                                               m_fichierWordPlusieursEtiquettes;
+   if ( m_fichierWordToUse->getChemin( ) != "" &&
         m_codePatient->motARemplacer() != "" &&
         m_sex->motARemplacer() != "" &&
         ( m_nombreCodePatient->getNombre() > 1 ||  m_dateDeNaissance->motARemplacer() != "" ) )
    {
       lancerGenerationWord(
-         m_fichierWord->getChemin(),
+         m_fichierWordToUse->getChemin( ),
          m_codePatient->motARemplacer(), m_codePatient->motParLequelRemplacer(),
          m_sex->motARemplacer(), m_sex->motParLequelRemplacer(),
          m_dateDeNaissance->motARemplacer(), m_dateDeNaissance->motParLequelRemplacer(),
@@ -218,7 +230,11 @@ void ProgrammeEtiquettes::sauverConfig()
    getConfig().miseAJourRemplacerConfig(
       config::RemplacerConfig( labelDateDeNaissance, m_dateDeNaissance->motARemplacer() ) );
    getConfig().miseAJourSelectionFichierConfig(
-      config::SelectionFichierConfig( labelWord, m_fichierWord->getChemin() ) );
+      config::SelectionFichierConfig( labelWordUneEtiquette,
+                                      m_fichierWordUneEtiquette->getChemin() ) );
+   getConfig().miseAJourSelectionFichierConfig(
+      config::SelectionFichierConfig( labelWordPlusieursEtiquettes,
+                                      m_fichierWordPlusieursEtiquettes->getChemin() ) );
    getConfigs().sauver();
 }
 

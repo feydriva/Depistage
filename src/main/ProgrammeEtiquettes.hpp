@@ -33,7 +33,8 @@ private:
    gui::MetaRemplacer * m_sex;
    gui::MetaRemplacer * m_dateDeNaissance;
 
-   gui::SelectionFichier * m_fichierWord;
+   gui::SelectionFichier * m_fichierWordUneEtiquette;
+   gui::SelectionFichier * m_fichierWordPlusieursEtiquettes;
 
    void nouveauDernierCodePatient();
 
