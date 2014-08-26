@@ -1,9 +1,11 @@
-
+ï»¿
 #include "ConfigProgrammes.hpp"
 
 #include <QtCore/QFile>
 #include <QtCore/QIODevice>
 #include <QtCore/QTextStream>
+
+#include <QtWidgets/QMessageBox>
 
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
@@ -23,7 +25,7 @@ ConfigProgrammes::ConfigProgrammes( const QString & chemin )
 {
    QDomDocument depistageDocument( labelGlobal );
 
-   // Todo : mieux gérer ça !
+   // Todo : mieux gerer ca !
    QFile file( chemin );
    if ( !file.open( QIODevice::ReadOnly ) )
    {
@@ -68,7 +70,7 @@ void ConfigProgrammes::sauver()
       configProgramme.second.sauver( depistageDocument, programme );
    }
 
-   // Todo : mieux gérer ça !
+   // Todo : mieux gerer ca !
    QFile file( m_chemin );
    if ( !file.open( QIODevice::WriteOnly ) )
    {
@@ -77,6 +79,10 @@ void ConfigProgrammes::sauver()
 
    QTextStream  out( &file );
    out << depistageDocument.toString( 3 );
+
+    QMessageBox msgSauvegarde;
+	msgSauvegarde.setText( QObject::tr( "Sauvegarde terminÃ©e" ) );
+	msgSauvegarde.exec();
 }
 
 
