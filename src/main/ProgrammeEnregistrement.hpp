@@ -15,12 +15,15 @@ class ProgrammeEnregistrement : public ProgrammeStandart
 {
    Q_OBJECT
 public :
-   ProgrammeEnregistrement( depistage::config::ConfigProgrammes & configs );
+   ProgrammeEnregistrement( const QString & titre,
+                            depistage::config::ConfigProgrammes & configs );
 
    virtual const QString & getTitre() const;
    virtual const std::vector< gui::ElementGUI * > & getElementsGUI() const;
 
 private:
+   const QString m_titre;
+
    std::vector< gui::ElementGUI * > m_elementsGUI;
 
    gui::MetaRemplacer * m_codePatient;

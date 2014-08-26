@@ -16,7 +16,6 @@ namespace depistage { namespace main {
 
 namespace {
 
-const QString titre = "TROD";
 const QString labelCodePatient = "codePatient";
 const QString labelSex = "sex";
 const QString labelDateDeNaissance = "dateDeNaissance";
@@ -30,8 +29,10 @@ const QString labelExcel = "excel";
 
 }
 
-ProgrammeEnregistrement::ProgrammeEnregistrement( depistage::config::ConfigProgrammes & configs )
-   : ProgrammeStandart( configs, titre )
+ProgrammeEnregistrement::ProgrammeEnregistrement( const QString & titre,
+                                                  depistage::config::ConfigProgrammes & configs )
+   : ProgrammeStandart( configs, titre ),
+     m_titre( titre )
 {
    m_codePatient = creerRemplacerMot( getConfig(), tr( "Code patient" ), labelCodePatient );
    m_elementsGUI.push_back( m_codePatient );
@@ -96,7 +97,7 @@ ProgrammeEnregistrement::ProgrammeEnregistrement( depistage::config::ConfigProgr
 
 const QString & ProgrammeEnregistrement::getTitre() const
 {
-   return titre;
+   return m_titre;
 }
 
 const std::vector< gui::ElementGUI * > & ProgrammeEnregistrement::getElementsGUI() const
@@ -189,7 +190,7 @@ void ProgrammeEnregistrement::lancerGeneration()
 
 void ProgrammeEnregistrement::sauverConfig()
 {
-   getConfig().setLabel( titre );
+   getConfig().setLabel( m_titre );
    getConfig().miseAJourRemplacerConfig(
       config::RemplacerConfig( labelCodePatient, m_codePatient->motARemplacer() ) );
    getConfig().miseAJourRemplacerConfig(
